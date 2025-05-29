@@ -18,6 +18,7 @@ import { Route as FormattersJsonImport } from './routes/formatters/json'
 import { Route as DebuggersJwtImport } from './routes/debuggers/jwt'
 import { Route as ConvertersUrlencodeDecodeImport } from './routes/converters/urlencode-decode'
 import { Route as ConvertersUnixTimeImport } from './routes/converters/unix-time'
+import { Route as ConvertersTextcaseImport } from './routes/converters/textcase'
 import { Route as ConvertersHashImport } from './routes/converters/hash'
 import { Route as ConvertersBase64Import } from './routes/converters/base64'
 
@@ -65,6 +66,12 @@ const ConvertersUnixTimeRoute = ConvertersUnixTimeImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ConvertersTextcaseRoute = ConvertersTextcaseImport.update({
+  id: '/converters/textcase',
+  path: '/converters/textcase',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ConvertersHashRoute = ConvertersHashImport.update({
   id: '/converters/hash',
   path: '/converters/hash',
@@ -100,6 +107,13 @@ declare module '@tanstack/react-router' {
       path: '/converters/hash'
       fullPath: '/converters/hash'
       preLoaderRoute: typeof ConvertersHashImport
+      parentRoute: typeof rootRoute
+    }
+    '/converters/textcase': {
+      id: '/converters/textcase'
+      path: '/converters/textcase'
+      fullPath: '/converters/textcase'
+      preLoaderRoute: typeof ConvertersTextcaseImport
       parentRoute: typeof rootRoute
     }
     '/converters/unix-time': {
@@ -153,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/converters/base64': typeof ConvertersBase64Route
   '/converters/hash': typeof ConvertersHashRoute
+  '/converters/textcase': typeof ConvertersTextcaseRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
@@ -165,6 +180,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/converters/base64': typeof ConvertersBase64Route
   '/converters/hash': typeof ConvertersHashRoute
+  '/converters/textcase': typeof ConvertersTextcaseRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
@@ -178,6 +194,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/converters/base64': typeof ConvertersBase64Route
   '/converters/hash': typeof ConvertersHashRoute
+  '/converters/textcase': typeof ConvertersTextcaseRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
@@ -192,6 +209,7 @@ export interface FileRouteTypes {
     | '/'
     | '/converters/base64'
     | '/converters/hash'
+    | '/converters/textcase'
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
@@ -203,6 +221,7 @@ export interface FileRouteTypes {
     | '/'
     | '/converters/base64'
     | '/converters/hash'
+    | '/converters/textcase'
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
@@ -214,6 +233,7 @@ export interface FileRouteTypes {
     | '/'
     | '/converters/base64'
     | '/converters/hash'
+    | '/converters/textcase'
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
@@ -227,6 +247,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConvertersBase64Route: typeof ConvertersBase64Route
   ConvertersHashRoute: typeof ConvertersHashRoute
+  ConvertersTextcaseRoute: typeof ConvertersTextcaseRoute
   ConvertersUnixTimeRoute: typeof ConvertersUnixTimeRoute
   ConvertersUrlencodeDecodeRoute: typeof ConvertersUrlencodeDecodeRoute
   DebuggersJwtRoute: typeof DebuggersJwtRoute
@@ -239,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConvertersBase64Route: ConvertersBase64Route,
   ConvertersHashRoute: ConvertersHashRoute,
+  ConvertersTextcaseRoute: ConvertersTextcaseRoute,
   ConvertersUnixTimeRoute: ConvertersUnixTimeRoute,
   ConvertersUrlencodeDecodeRoute: ConvertersUrlencodeDecodeRoute,
   DebuggersJwtRoute: DebuggersJwtRoute,
@@ -260,6 +282,7 @@ export const routeTree = rootRoute
         "/",
         "/converters/base64",
         "/converters/hash",
+        "/converters/textcase",
         "/converters/unix-time",
         "/converters/urlencode-decode",
         "/debuggers/jwt",
@@ -276,6 +299,9 @@ export const routeTree = rootRoute
     },
     "/converters/hash": {
       "filePath": "converters/hash.tsx"
+    },
+    "/converters/textcase": {
+      "filePath": "converters/textcase.tsx"
     },
     "/converters/unix-time": {
       "filePath": "converters/unix-time.tsx"
