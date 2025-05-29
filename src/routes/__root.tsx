@@ -32,6 +32,13 @@ export const Route = createRootRoute({
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        src: "https://stats.broddin.be/js/script.js",
+        'data-domain': 'tinydev.tools',
+        defer: 'defer',
+      },
+    ],
   }),
   component: RootComponent,
 })
