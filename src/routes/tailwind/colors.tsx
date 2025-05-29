@@ -1,14 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import TailwindColors from '@/tools/TailwindColors'
+import { seo } from '@/lib/seo'
 
 export const Route = createFileRoute('/tailwind/colors')({
   component: RouteComponent,
   head: () => {
     return {
       meta: [
-        {
-          title: "Tailwind Colors - tinydev.tools",
-        },
+        ...seo({
+          title: "Tailwind Colors",
+          description: "Generate Tailwind CSS colors to use in your projects",
+          keywords: "tailwind, colors, generator, tailwindcss",
+        }),
       ],
     };
   },

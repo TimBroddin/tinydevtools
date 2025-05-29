@@ -17,5 +17,9 @@ export default defineConfig({
   server: {
     preset: 'cloudflare-pages',
     unenv: cloudflare,
+    prerender: {
+      routes: ['/'],
+      crawlLinks: true,
+    },
   },
 })

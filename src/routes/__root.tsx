@@ -7,7 +7,8 @@ import type { ReactNode } from 'react'
 import Layout from '@/components/Layout'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import appCss from "@/index.css?url"
-console.log(appCss)
+import { seo } from '@/lib/seo'
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -19,12 +20,17 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'tinydev.tools',
+        title:'tinydev.tools',
       },
       {
         rel: "icon",
         href: "/favicon.svg",
       },
+      ...seo({
+        title: null,
+        description: 'A collection of tiny tools to help you with your daily tasks.',
+        keywords: 'tinytools,tinydevtools, tools, tinydev.tools',
+      }),
     ],
     links: [
       {
@@ -36,7 +42,7 @@ export const Route = createRootRoute({
       {
         src: "https://stats.broddin.be/js/script.js",
         'data-domain': 'tinydev.tools',
-        defer: 'defer',
+        defer: true,
       },
     ],
   }),
