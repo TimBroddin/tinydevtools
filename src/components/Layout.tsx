@@ -18,6 +18,8 @@ const tools = [
     items: [
       { name: "Unix Time", path: "/converters/unix-time" },
       { name: "Base64", path: "/converters/base64" },
+      { name: "URL Encode/Decode", path: "/converters/urlencode-decode" },
+      { name: "Hash Generator & Verifier", path: "/converters/hash" },
     ],
   },
   {

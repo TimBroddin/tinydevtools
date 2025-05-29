@@ -16,7 +16,9 @@ import { Route as TailwindColorsImport } from './routes/tailwind/colors'
 import { Route as GeneratorsUuidImport } from './routes/generators/uuid'
 import { Route as FormattersJsonImport } from './routes/formatters/json'
 import { Route as DebuggersJwtImport } from './routes/debuggers/jwt'
+import { Route as ConvertersUrlencodeDecodeImport } from './routes/converters/urlencode-decode'
 import { Route as ConvertersUnixTimeImport } from './routes/converters/unix-time'
+import { Route as ConvertersHashImport } from './routes/converters/hash'
 import { Route as ConvertersBase64Import } from './routes/converters/base64'
 
 // Create/Update Routes
@@ -51,9 +53,21 @@ const DebuggersJwtRoute = DebuggersJwtImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ConvertersUrlencodeDecodeRoute = ConvertersUrlencodeDecodeImport.update({
+  id: '/converters/urlencode-decode',
+  path: '/converters/urlencode-decode',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ConvertersUnixTimeRoute = ConvertersUnixTimeImport.update({
   id: '/converters/unix-time',
   path: '/converters/unix-time',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ConvertersHashRoute = ConvertersHashImport.update({
+  id: '/converters/hash',
+  path: '/converters/hash',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -81,11 +95,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConvertersBase64Import
       parentRoute: typeof rootRoute
     }
+    '/converters/hash': {
+      id: '/converters/hash'
+      path: '/converters/hash'
+      fullPath: '/converters/hash'
+      preLoaderRoute: typeof ConvertersHashImport
+      parentRoute: typeof rootRoute
+    }
     '/converters/unix-time': {
       id: '/converters/unix-time'
       path: '/converters/unix-time'
       fullPath: '/converters/unix-time'
       preLoaderRoute: typeof ConvertersUnixTimeImport
+      parentRoute: typeof rootRoute
+    }
+    '/converters/urlencode-decode': {
+      id: '/converters/urlencode-decode'
+      path: '/converters/urlencode-decode'
+      fullPath: '/converters/urlencode-decode'
+      preLoaderRoute: typeof ConvertersUrlencodeDecodeImport
       parentRoute: typeof rootRoute
     }
     '/debuggers/jwt': {
@@ -124,7 +152,9 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/converters/base64': typeof ConvertersBase64Route
+  '/converters/hash': typeof ConvertersHashRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
+  '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
@@ -134,7 +164,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/converters/base64': typeof ConvertersBase64Route
+  '/converters/hash': typeof ConvertersHashRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
+  '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
@@ -145,7 +177,9 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/converters/base64': typeof ConvertersBase64Route
+  '/converters/hash': typeof ConvertersHashRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
+  '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
@@ -157,7 +191,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/converters/base64'
+    | '/converters/hash'
     | '/converters/unix-time'
+    | '/converters/urlencode-decode'
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/uuid'
@@ -166,7 +202,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/converters/base64'
+    | '/converters/hash'
     | '/converters/unix-time'
+    | '/converters/urlencode-decode'
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/uuid'
@@ -175,7 +213,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/converters/base64'
+    | '/converters/hash'
     | '/converters/unix-time'
+    | '/converters/urlencode-decode'
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/uuid'
@@ -186,7 +226,9 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConvertersBase64Route: typeof ConvertersBase64Route
+  ConvertersHashRoute: typeof ConvertersHashRoute
   ConvertersUnixTimeRoute: typeof ConvertersUnixTimeRoute
+  ConvertersUrlencodeDecodeRoute: typeof ConvertersUrlencodeDecodeRoute
   DebuggersJwtRoute: typeof DebuggersJwtRoute
   FormattersJsonRoute: typeof FormattersJsonRoute
   GeneratorsUuidRoute: typeof GeneratorsUuidRoute
@@ -196,7 +238,9 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConvertersBase64Route: ConvertersBase64Route,
+  ConvertersHashRoute: ConvertersHashRoute,
   ConvertersUnixTimeRoute: ConvertersUnixTimeRoute,
+  ConvertersUrlencodeDecodeRoute: ConvertersUrlencodeDecodeRoute,
   DebuggersJwtRoute: DebuggersJwtRoute,
   FormattersJsonRoute: FormattersJsonRoute,
   GeneratorsUuidRoute: GeneratorsUuidRoute,
@@ -215,7 +259,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/converters/base64",
+        "/converters/hash",
         "/converters/unix-time",
+        "/converters/urlencode-decode",
         "/debuggers/jwt",
         "/formatters/json",
         "/generators/uuid",
@@ -228,8 +274,14 @@ export const routeTree = rootRoute
     "/converters/base64": {
       "filePath": "converters/base64.tsx"
     },
+    "/converters/hash": {
+      "filePath": "converters/hash.tsx"
+    },
     "/converters/unix-time": {
       "filePath": "converters/unix-time.tsx"
+    },
+    "/converters/urlencode-decode": {
+      "filePath": "converters/urlencode-decode.tsx"
     },
     "/debuggers/jwt": {
       "filePath": "debuggers/jwt.tsx"
