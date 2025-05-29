@@ -32,6 +32,10 @@ const tools = [
     category: "Formatters",
     items: [{ name: "JSON", path: "/formatters/json" }],
   },
+  {
+    category: "Tailwind",
+    items: [{ name: "Colors", path: "/tailwind/colors" }],
+  },
 ];
 
 const Sidebar = ({ className }: SidebarProps) => {

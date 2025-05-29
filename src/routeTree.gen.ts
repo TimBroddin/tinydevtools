@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as TailwindColorsImport } from './routes/tailwind/colors'
 import { Route as GeneratorsUuidImport } from './routes/generators/uuid'
 import { Route as FormattersJsonImport } from './routes/formatters/json'
 import { Route as DebuggersJwtImport } from './routes/debuggers/jwt'
@@ -23,6 +24,12 @@ import { Route as ConvertersBase64Import } from './routes/converters/base64'
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TailwindColorsRoute = TailwindColorsImport.update({
+  id: '/tailwind/colors',
+  path: '/tailwind/colors',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -102,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GeneratorsUuidImport
       parentRoute: typeof rootRoute
     }
+    '/tailwind/colors': {
+      id: '/tailwind/colors'
+      path: '/tailwind/colors'
+      fullPath: '/tailwind/colors'
+      preLoaderRoute: typeof TailwindColorsImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -114,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/tailwind/colors': typeof TailwindColorsRoute
 }
 
 export interface FileRoutesByTo {
@@ -123,6 +138,7 @@ export interface FileRoutesByTo {
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/tailwind/colors': typeof TailwindColorsRoute
 }
 
 export interface FileRoutesById {
@@ -133,6 +149,7 @@ export interface FileRoutesById {
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/tailwind/colors': typeof TailwindColorsRoute
 }
 
 export interface FileRouteTypes {
@@ -144,6 +161,7 @@ export interface FileRouteTypes {
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/uuid'
+    | '/tailwind/colors'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -152,6 +170,7 @@ export interface FileRouteTypes {
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/uuid'
+    | '/tailwind/colors'
   id:
     | '__root__'
     | '/'
@@ -160,6 +179,7 @@ export interface FileRouteTypes {
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/uuid'
+    | '/tailwind/colors'
   fileRoutesById: FileRoutesById
 }
 
@@ -170,6 +190,7 @@ export interface RootRouteChildren {
   DebuggersJwtRoute: typeof DebuggersJwtRoute
   FormattersJsonRoute: typeof FormattersJsonRoute
   GeneratorsUuidRoute: typeof GeneratorsUuidRoute
+  TailwindColorsRoute: typeof TailwindColorsRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -179,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   DebuggersJwtRoute: DebuggersJwtRoute,
   FormattersJsonRoute: FormattersJsonRoute,
   GeneratorsUuidRoute: GeneratorsUuidRoute,
+  TailwindColorsRoute: TailwindColorsRoute,
 }
 
 export const routeTree = rootRoute
@@ -196,7 +218,8 @@ export const routeTree = rootRoute
         "/converters/unix-time",
         "/debuggers/jwt",
         "/formatters/json",
-        "/generators/uuid"
+        "/generators/uuid",
+        "/tailwind/colors"
       ]
     },
     "/": {
@@ -216,6 +239,9 @@ export const routeTree = rootRoute
     },
     "/generators/uuid": {
       "filePath": "generators/uuid.tsx"
+    },
+    "/tailwind/colors": {
+      "filePath": "tailwind/colors.tsx"
     }
   }
 }
