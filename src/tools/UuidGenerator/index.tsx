@@ -10,7 +10,12 @@ const UuidGenerator = () => {
   const [uuids, setUuids] = useState<string[]>([]);
 
   useEffect(() => {
-    setUuids(generateUuid(type, count));
+    const generateUuids = async () => {
+      const generatedUuids = await generateUuid(type, count);
+      setUuids(generatedUuids);
+    };
+    
+    generateUuids();
   }, [type, count]);
 
   const handleCopy = (text: string) => {

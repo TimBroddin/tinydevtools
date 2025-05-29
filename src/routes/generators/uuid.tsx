@@ -3,6 +3,15 @@ import UuidGenerator from '../../tools/UuidGenerator'
 
 export const Route = createFileRoute('/generators/uuid')({
   component: UuidGenerator,
-})
+  head: () => {
+    return {
+      meta: [
+        {
+          title: "UUID Generator - tinydev.tools",
+        },
+      ],
+    };
+  },    
+});
 
 
