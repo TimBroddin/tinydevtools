@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import { Copy, Check, X } from 'lucide-react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { vs2015, vs } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { useTheme } from '../../contexts/ThemeContext';
 import { decodeJwt, formatJwt, verifyJwt, encodeJwt } from './utils';
 import { JWT_ALGORITHMS, type JwtAlgorithm } from './types';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 
 const JwtDebugger = () => {
   const [token, setToken] = useState('');
@@ -14,12 +21,11 @@ const JwtDebugger = () => {
   const [decoded, setDecoded] = useState({ header: '', payload: '', signature: '', error: '' });
   const [isValid, setIsValid] = useState<boolean | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     if (!isEditing) {
       const result = decodeJwt(token);
-      setDecoded(result);
+      setDecoded({ ...result, error: result.error || '' });
       setIsValid(null);
     }
   }, [token, isEditing]);
@@ -82,8 +88,6 @@ const JwtDebugger = () => {
     setIsEditing(false);
   };
 
-  const syntaxStyle = theme === 'dark' ? vs2015 : vs;
-
   return (
     <ToolLayout
       title="JWT Debugger"
@@ -96,28 +100,32 @@ const JwtDebugger = () => {
               Encoded JWT
             </label>
             <div className="flex gap-2">
-              <button
+              <Button
                 onClick={handlePaste}
-                className="text-xs text-primary hover:text-primary/80"
+                variant="link"
+                size="sm"
+                className="text-xs h-auto p-0"
               >
                 Paste
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleClear}
-                className="text-xs text-muted-foreground hover:text-foreground"
+                variant="link"
+                size="sm"
+                className="text-xs text-muted-foreground hover:text-foreground h-auto p-0"
               >
                 Clear
-              </button>
+              </Button>
             </div>
           </div>
-          <textarea
+          <Textarea
             value={token}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setToken(e.target.value);
               setIsEditing(false);
             }}
             placeholder="Enter your JWT token..."
-            className="tool-textarea font-mono text-sm"
+            className="min-h-[100px] font-mono text-sm"
           />
         </div>
 
@@ -133,38 +141,42 @@ const JwtDebugger = () => {
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <label className="block text-sm font-medium">Header</label>
-                  <button
+                  <Button
                     onClick={() => handleCopy(decoded.header)}
-                    className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+                    variant="link"
+                    size="sm"
+                    className="text-xs flex items-center gap-1 h-auto p-0"
                   >
                     <Copy className="w-3 h-3" />
                     Copy
-                  </button>
+                  </Button>
                 </div>
-                <textarea
+                <Textarea
                   value={decoded.header}
-                  onChange={(e) => handleHeaderChange(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleHeaderChange(e.target.value)}
                   placeholder="{}"
-                  className="tool-textarea font-mono text-sm"
+                  className="min-h-[120px] font-mono text-sm"
                 />
               </div>
 
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <label className="block text-sm font-medium">Payload</label>
-                  <button
+                  <Button
                     onClick={() => handleCopy(decoded.payload)}
-                    className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+                    variant="link"
+                    size="sm"
+                    className="text-xs flex items-center gap-1 h-auto p-0"
                   >
                     <Copy className="w-3 h-3" />
                     Copy
-                  </button>
+                  </Button>
                 </div>
-                <textarea
+                <Textarea
                   value={decoded.payload}
-                  onChange={(e) => handlePayloadChange(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handlePayloadChange(e.target.value)}
                   placeholder="{}"
-                  className="tool-textarea font-mono text-sm"
+                  className="min-h-[120px] font-mono text-sm"
                 />
               </div>
             </div>
@@ -174,22 +186,23 @@ const JwtDebugger = () => {
                 <label className="block text-sm font-medium mb-2">
                   Verify Signature
                 </label>
-                <div className="flex gap-4">
-                  <select
-                    value={algorithm}
-                    onChange={(e) => setAlgorithm(e.target.value as JwtAlgorithm)}
-                    className="tool-input w-32"
-                  >
-                    {JWT_ALGORITHMS.map(alg => (
-                      <option key={alg} value={alg}>{alg}</option>
-                    ))}
-                  </select>
-                  <input
+                <div className="flex flex-col sm:flex-row gap-2 sm:items-center">
+                  <Select value={algorithm} onValueChange={(value: JwtAlgorithm) => setAlgorithm(value)}>
+                    <SelectTrigger className="w-full sm:w-[120px]">
+                      <SelectValue placeholder="Algorithm" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {JWT_ALGORITHMS.map(alg => (
+                        <SelectItem key={alg} value={alg}>{alg}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Input
                     type="text"
                     value={secret}
-                    onChange={(e) => setSecret(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSecret(e.target.value)}
                     placeholder="Enter your secret key..."
-                    className="tool-input flex-1"
+                    className="flex-1"
                   />
                   {isValid !== null && (
                     <div className={`flex items-center gap-2 px-4 rounded-md ${
@@ -212,25 +225,26 @@ const JwtDebugger = () => {
 
               {isEditing && (
                 <div className="flex justify-end">
-                  <button
+                  <Button
                     onClick={handleEncode}
-                    className="btn btn-primary px-4 py-2"
                   >
                     Encode Changes
-                  </button>
+                  </Button>
                 </div>
               )}
 
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <label className="block text-sm font-medium">Signature</label>
-                  <button
+                  <Button
                     onClick={() => handleCopy(decoded.signature)}
-                    className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+                    variant="link"
+                    size="sm"
+                    className="text-xs flex items-center gap-1 h-auto p-0"
                   >
                     <Copy className="w-3 h-3" />
                     Copy
-                  </button>
+                  </Button>
                 </div>
                 <div className="bg-muted p-4 rounded-md font-mono text-sm break-all">
                   {decoded.signature}

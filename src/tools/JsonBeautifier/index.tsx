@@ -4,6 +4,15 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015, vs } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useTheme } from '../../contexts/ThemeContext';
 import { formatJson, validateJson } from './utils';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 
 const JsonBeautifier = () => {
   const [input, setInput] = useState<string>('');
@@ -44,7 +53,8 @@ const JsonBeautifier = () => {
       const parsedJson = JSON.parse(input);
       const minified = JSON.stringify(parsedJson);
       setOutput(minified);
-    } catch (err) {
+    } catch (_err) {
+      console.error("Minification failed (error display suppressed):", _err);
       // Keep the existing error state if minification fails
     }
   };
@@ -73,36 +83,41 @@ const JsonBeautifier = () => {
               Input JSON
             </label>
             <div className="flex items-center gap-3">
-              <select
-                value={indentSize}
-                onChange={(e) => setIndentSize(Number(e.target.value))}
-                className="bg-background border border-input rounded px-2 py-1 text-sm"
-              >
-                {[2, 4, 8].map((size) => (
-                  <option key={size} value={size}>
-                    {size} spaces
-                  </option>
-                ))}
-              </select>
-              <button
+              <Select value={indentSize.toString()} onValueChange={(value) => setIndentSize(Number(value))}>
+                <SelectTrigger className="w-[120px] h-8 text-xs">
+                  <SelectValue placeholder="Indent size" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[2, 4, 8].map((size) => (
+                    <SelectItem key={size} value={size.toString()} className="text-xs">
+                      {size} spaces
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button
                 onClick={handleMinify}
-                className="text-xs text-primary hover:text-primary/80"
+                variant="link"
+                size="sm"
+                className="text-xs h-auto p-0"
               >
                 Minify
-              </button>
-              <button
+              </Button>
+              <Button
                 onClick={handleClearAll}
-                className="text-xs text-muted-foreground hover:text-foreground"
+                variant="link"
+                size="sm"
+                className="text-xs text-muted-foreground hover:text-foreground h-auto p-0"
               >
                 Clear
-              </button>
+              </Button>
             </div>
           </div>
-          <textarea
+          <Textarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             placeholder="Paste your JSON here..."
-            className="tool-textarea"
+            className="min-h-[200px] font-mono text-sm"
           />
         </div>
 
@@ -118,12 +133,14 @@ const JsonBeautifier = () => {
               <label className="block text-sm font-medium">
                 Formatted JSON
               </label>
-              <button
+              <Button
                 onClick={handleCopyOutput}
-                className="text-xs text-primary hover:text-primary/80"
+                variant="link"
+                size="sm"
+                className="text-xs h-auto p-0"
               >
                 Copy to Clipboard
-              </button>
+              </Button>
             </div>
             <div className="relative">
               <SyntaxHighlighter

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Terminal, Code, Zap, ArrowRight, Github } from 'lucide-react'
+import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -57,23 +58,27 @@ function RouteComponent() {
           
           {/* CTA */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link 
-              to="/converters/unix-time"
-              className="group inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-mono text-sm hover:bg-primary/90 transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              <span>./start</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <Button asChild className="font-mono text-sm shadow-lg hover:shadow-xl group">
+              <Link 
+                to="/converters/unix-time"
+                className="inline-flex items-center gap-2 px-6 py-3"
+              >
+                <span>./start</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
             
-            <a 
-              href="https://github.com/timbroddin/tinydevtools" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-mono text-sm"
-            >
-              <Github className="w-4 h-4" />
-              <span>view source</span>
-            </a>
+            <Button asChild variant="link" className="font-mono text-sm group">
+              <a 
+                href="https://github.com/timbroddin/tinydevtools" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2"
+              >
+                <Github className="w-4 h-4" />
+                <span>view source</span>
+              </a>
+            </Button>
           </div>
           
           {/* Terminal hint */}

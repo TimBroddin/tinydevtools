@@ -9,6 +9,16 @@ import {
   HashAlgorithm, 
   HASH_ALGORITHMS 
 } from './utils';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 
 type Mode = 'text' | 'file' | 'compare';
 
@@ -161,41 +171,36 @@ const HashTool = () => {
         {/* Mode Selection */}
         <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between">
           <div className="flex gap-2">
-            <button
+            <Button
               onClick={() => setMode('text')}
-              className={`btn px-4 py-2 ${
-                mode === 'text' ? 'btn-primary' : 'btn-secondary'
-              }`}
+              variant={mode === 'text' ? 'default' : 'secondary'}
             >
               <FileText className="w-4 h-4 mr-2" />
               Text Hash
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setMode('file')}
-              className={`btn px-4 py-2 ${
-                mode === 'file' ? 'btn-primary' : 'btn-secondary'
-              }`}
+              variant={mode === 'file' ? 'default' : 'secondary'}
             >
               <Hash className="w-4 h-4 mr-2" />
               File Hash
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setMode('compare')}
-              className={`btn px-4 py-2 ${
-                mode === 'compare' ? 'btn-primary' : 'btn-secondary'
-              }`}
+              variant={mode === 'compare' ? 'default' : 'secondary'}
             >
               <Check className="w-4 h-4 mr-2" />
               Verify
-            </button>
+            </Button>
           </div>
           
-          <button
+          <Button
             onClick={handleClearAll}
-            className="btn btn-ghost px-3 py-2 text-sm"
+            variant="ghost"
+            size="sm"
           >
             Clear All
-          </button>
+          </Button>
         </div>
 
         {/* Text Input Mode */}
@@ -204,11 +209,11 @@ const HashTool = () => {
             <label className="block text-sm font-medium mb-2">
               Text to Hash
             </label>
-            <textarea
+            <Textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter text to generate hashes..."
-              className="tool-textarea"
+              className="min-h-[100px]"
               rows={4}
             />
           </div>
@@ -220,11 +225,11 @@ const HashTool = () => {
             <label className="block text-sm font-medium mb-2">
               Select File to Hash
             </label>
-            <input
+            <Input
               ref={fileInputRef}
               type="file"
               onChange={handleFileSelect}
-              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 cursor-pointer"
             />
             {selectedFile && (
               <div className="mt-2 p-3 bg-muted rounded-md">
@@ -246,12 +251,12 @@ const HashTool = () => {
               <label className="block text-sm font-medium mb-2">
                 Known Hash (to verify against)
               </label>
-              <input
+              <Input
                 type="text"
                 value={knownHash}
                 onChange={(e) => setKnownHash(e.target.value)}
-                placeholder="Enter the expected hash value..."
-                className="tool-input"
+                placeholder="Enter known hash value"
+                className="font-mono"
               />
             </div>
             
@@ -259,66 +264,58 @@ const HashTool = () => {
               <label className="block text-sm font-medium mb-2">
                 Hash Algorithm
               </label>
-              <select
-                value={compareAlgorithm}
-                onChange={(e) => setCompareAlgorithm(e.target.value as HashAlgorithm)}
-                className="w-full px-3 py-2 border border-input bg-background rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
-              >
-                {HASH_ALGORITHMS.map((algorithm) => (
-                  <option key={algorithm} value={algorithm}>
-                    {algorithm}
-                  </option>
-                ))}
-              </select>
+              <Select value={compareAlgorithm} onValueChange={(value: HashAlgorithm) => setCompareAlgorithm(value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select algorithm" />
+                </SelectTrigger>
+                <SelectContent>
+                  {HASH_ALGORITHMS.map((alg) => (
+                    <SelectItem key={alg} value={alg}>
+                      {alg}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
-            <div className="flex gap-2 mb-4">
-              <button
-                onClick={() => {
-                  setCompareMode('text');
-                  setCompareFile(null);
-                  if (compareFileInputRef.current) {
-                    compareFileInputRef.current.value = '';
-                  }
-                }}
-                className={`btn px-4 py-2 ${
-                  compareMode === 'text' ? 'btn-primary' : 'btn-secondary'
-                }`}
+            <div className="flex gap-2 mb-2">
+              <Button 
+                onClick={() => setCompareMode('text')} 
+                variant={compareMode === 'text' ? 'default' : 'secondary'}
+                size="sm"
               >
-                Text Input
-              </button>
-              <button
-                onClick={() => {
-                  setCompareMode('file');
-                  setCompareInput('');
-                }}
-                className={`btn px-4 py-2 ${
-                  compareMode === 'file' ? 'btn-primary' : 'btn-secondary'
-                }`}
+                Text
+              </Button>
+              <Button 
+                onClick={() => setCompareMode('file')} 
+                variant={compareMode === 'file' ? 'default' : 'secondary'}
+                size="sm"
               >
-                File Input
-              </button>
+                File
+              </Button>
             </div>
 
-            {compareMode === 'text' ? (
+            {compareMode === 'text' && (
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Content to Verify
+                  Text to Verify
                 </label>
-                <textarea
+                <Textarea
                   value={compareInput}
                   onChange={(e) => setCompareInput(e.target.value)}
-                  placeholder="Enter the content you want to verify..."
-                  className="tool-textarea"
-                  rows={4}
+                  placeholder="Enter text to generate hash for verification..."
+                  className="min-h-[100px]"
+                  rows={3}
                 />
               </div>
-            ) : (
+            )}
+
+            {compareMode === 'file' && (
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  File to Verify
+                  Select File to Verify
                 </label>
-                <input
+                <Input
                   ref={compareFileInputRef}
                   type="file"
                   onChange={(e) => {
@@ -327,7 +324,7 @@ const HashTool = () => {
                       setCompareFile(file);
                     }
                   }}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 cursor-pointer"
                 />
                 {compareFile && (
                   <div className="mt-2 p-3 bg-muted rounded-md">
@@ -366,22 +363,18 @@ const HashTool = () => {
                   <div className="border rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-medium text-sm">Known Hash ({compareAlgorithm})</h4>
-                      <button
+                      <Button
                         onClick={() => handleCopyHash('known', knownHash)}
-                        className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+                        variant="ghost"
+                        size="icon"
+                        className="w-8 h-8"
                       >
                         {copiedHash === 'known' ? (
-                          <>
-                            <Check className="w-3 h-3" />
-                            Copied!
-                          </>
+                          <Check className="w-4 h-4 text-green-500" />
                         ) : (
-                          <>
-                            <Copy className="w-3 h-3" />
-                            Copy
-                          </>
+                          <Copy className="w-4 h-4" />
                         )}
-                      </button>
+                      </Button>
                     </div>
                     <div className="bg-muted p-3 rounded-md font-mono text-sm break-all">
                       {knownHash}
@@ -391,22 +384,18 @@ const HashTool = () => {
                   <div className="border rounded-lg p-4">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-medium text-sm">Generated Hash ({compareAlgorithm})</h4>
-                      <button
+                      <Button
                         onClick={() => handleCopyHash('generated', verificationResult.generatedHash)}
-                        className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+                        variant="ghost"
+                        size="icon"
+                        className="w-8 h-8"
                       >
                         {copiedHash === 'generated' ? (
-                          <>
-                            <Check className="w-3 h-3" />
-                            Copied!
-                          </>
+                          <Check className="w-4 h-4 text-green-500" />
                         ) : (
-                          <>
-                            <Copy className="w-3 h-3" />
-                            Copy
-                          </>
+                          <Copy className="w-4 h-4" />
                         )}
-                      </button>
+                      </Button>
                     </div>
                     <div className="bg-muted p-3 rounded-md font-mono text-sm break-all">
                       {verificationResult.generatedHash}
@@ -457,22 +446,18 @@ const HashTool = () => {
                         </div>
                       </div>
                     </div>
-                    <button
+                    <Button
                       onClick={() => handleCopyHash(algorithm, hash)}
-                      className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+                      variant="ghost"
+                      size="icon"
+                      className="w-8 h-8"
                     >
                       {copiedHash === algorithm ? (
-                        <>
-                          <Check className="w-3 h-3" />
-                          Copied!
-                        </>
+                        <Check className="w-4 h-4 text-green-500" />
                       ) : (
-                        <>
-                          <Copy className="w-3 h-3" />
-                          Copy
-                        </>
+                        <Copy className="w-4 h-4" />
                       )}
-                    </button>
+                    </Button>
                   </div>
                   <div className="bg-muted p-3 rounded-md font-mono text-sm break-all">
                     {hash.startsWith('Error:') ? (

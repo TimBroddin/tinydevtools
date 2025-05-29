@@ -1,27 +1,9 @@
 import { useState, useEffect } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import { Copy, RotateCcw, Shuffle } from 'lucide-react';
-import { convertCase, CaseType } from './utils';
-
-interface CaseOption {
-  key: CaseType;
-  label: string;
-  description: string;
-}
-
-const caseOptions: CaseOption[] = [
-  { key: 'uppercase', label: 'UPPERCASE', description: 'ALL LETTERS UPPERCASE' },
-  { key: 'lowercase', label: 'lowercase', description: 'all letters lowercase' },
-  { key: 'capitalize', label: 'Capitalize', description: 'First letter uppercase' },
-  { key: 'titlecase', label: 'Title Case', description: 'First Letter Of Each Word' },
-  { key: 'camelcase', label: 'camelCase', description: 'firstWordLowercaseRestUppercase' },
-  { key: 'pascalcase', label: 'PascalCase', description: 'FirstLetterOfEachWordUppercase' },
-  { key: 'snakecase', label: 'snake_case', description: 'words_separated_by_underscores' },
-  { key: 'kebabcase', label: 'kebab-case', description: 'words-separated-by-hyphens' },
-  { key: 'randomcase', label: 'rAnDoM cAsE', description: 'rAnDoMlY cApItAlIzEd' },
-  { key: 'alternatingcase', label: 'aLtErNaTiNg', description: 'aLtErNaTiNg CaPiTaLiZaTiOn' },
-  { key: 'inversecase', label: 'iNVERSE cASE', description: 'fLIPS tHE cASE oF eACH lETTER' }
-];
+import { convertCase, CaseType, caseOptions, CaseOption } from './utils';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 
 const TextCase = () => {
   const [input, setInput] = useState<string>('');
@@ -70,32 +52,36 @@ const TextCase = () => {
     >
       <div className="space-y-6">
         <div className="flex justify-end gap-2">
-          <button
+          <Button
             onClick={handleRandomizeInput}
-            className="btn btn-secondary px-3 py-2 text-sm flex items-center gap-1"
+            variant="secondary"
+            size="sm"
+            className="flex items-center gap-1"
             disabled={!input}
           >
             <Shuffle className="w-4 h-4" />
             Randomize
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleClear}
-            className="btn btn-ghost px-3 py-2 text-sm flex items-center gap-1"
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-1"
           >
             <RotateCcw className="w-4 h-4" />
             Clear
-          </button>
+          </Button>
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">
             Enter Text to Convert
           </label>
-          <textarea
+          <Textarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             placeholder="Type or paste your text here..."
-            className="tool-textarea min-h-[100px]"
+            className="min-h-[100px]"
           />
         </div>
 
@@ -104,16 +90,15 @@ const TextCase = () => {
             Select Case Type
           </label>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-            {caseOptions.map((option) => (
-              <button
+            {caseOptions.map((option: CaseOption) => (
+              <Button
                 key={option.key}
                 onClick={() => setSelectedCase(option.key)}
-                className={`btn px-3 py-2 text-sm ${
-                  selectedCase === option.key ? 'btn-primary' : 'btn-secondary'
-                }`}
+                variant={selectedCase === option.key ? 'default' : 'secondary'}
+                size="sm"
               >
                 {option.label}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -126,19 +111,17 @@ const TextCase = () => {
                   <h3 className="text-lg font-medium">{selectedCaseOption?.label}</h3>
                   <p className="text-sm text-muted-foreground">{selectedCaseOption?.description}</p>
                 </div>
-                <button
+                <Button
                   onClick={handleCopy}
-                  className={`btn px-4 py-2 flex items-center gap-2 transition-colors ${
-                    copied
-                      ? 'btn-ghost text-green-600'
-                      : 'btn-primary'
-                  }`}
+                  variant={copied ? 'ghost' : 'default'}
+                  size="default"
+                  className={`flex items-center gap-2 transition-colors ${copied ? 'text-green-600' : ''}`}
                 >
                   <Copy className="w-4 h-4" />
                   {copied ? 'Copied!' : 'Copy Result'}
-                </button>
+                </Button>
               </div>
-              <div className="bg-muted p-4 rounded-md font-mono text-base break-words">
+              <div className="bg-muted p-4 rounded-md font-mono text-base break-words min-h-[50px]">
                 {result || ''}
               </div>
             </div>

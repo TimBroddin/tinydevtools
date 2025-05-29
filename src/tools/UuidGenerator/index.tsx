@@ -3,6 +3,15 @@ import ToolLayout from '../../components/ToolLayout';
 import { Copy } from 'lucide-react';
 import { generateUuid } from './utils';
 import { UUID_TYPES, type UuidType } from './types';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 
 const UuidGenerator = () => {
   const [type, setType] = useState<UuidType>('v4');
@@ -37,29 +46,30 @@ const UuidGenerator = () => {
             <label className="block text-sm font-medium mb-2">
               UUID Type
             </label>
-            <select
-              value={type}
-              onChange={(e) => setType(e.target.value as UuidType)}
-              className="tool-input"
-            >
-              {UUID_TYPES.map((type) => (
-                <option key={type} value={type}>
-                  {type.toUpperCase()}
-                </option>
-              ))}
-            </select>
+            <Select value={type} onValueChange={(value: UuidType) => setType(value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select UUID type" />
+              </SelectTrigger>
+              <SelectContent>
+                {UUID_TYPES.map((uuidType) => (
+                  <SelectItem key={uuidType} value={uuidType}>
+                    {uuidType.toUpperCase()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div>
             <label className="block text-sm font-medium mb-2">
               Count
             </label>
-            <input
+            <Input
               type="number"
               min="1"
               max="100"
               value={count}
-              onChange={(e) => setCount(Math.min(100, Math.max(1, parseInt(e.target.value) || 1)))}
-              className="tool-input w-32"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCount(Math.min(100, Math.max(1, parseInt(e.target.value) || 1)))}
+              className="w-32"
             />
           </div>
         </div>
@@ -69,27 +79,30 @@ const UuidGenerator = () => {
             <label className="block text-sm font-medium">
               Generated UUIDs
             </label>
-            <button
+            <Button
               onClick={handleCopyAll}
-              className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+              variant="outline"
+              className="flex items-center gap-1 h-auto p-0"
             >
               <Copy className="w-3 h-3" />
               Copy All
-            </button>
+            </Button>
           </div>
           <div className="space-y-2">
             {uuids.map((uuid, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 p-2 bg-muted rounded-md font-mono text-sm group"
+                className="flex items-center gap-2 p-3 bg-muted rounded-md font-mono text-sm group"
               >
-                <span className="flex-1">{uuid}</span>
-                <button
+                <span className="flex-1 break-all">{uuid}</span>
+                <Button
                   onClick={() => handleCopy(uuid)}
-                  className="text-primary hover:text-primary/80 opacity-0 group-hover:opacity-100 transition-opacity"
+                  variant="ghost"
+                  size="icon"
+                  className="w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
                 >
                   <Copy className="w-4 h-4" />
-                </button>
+                </Button>
               </div>
             ))}
           </div>

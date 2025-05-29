@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import { Copy, RotateCw } from 'lucide-react';
 import { encodeBase64, decodeBase64 } from './utils';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 
 
 
@@ -62,38 +64,37 @@ const Base64Tool = () => {
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between">
           <div className="flex gap-2">
-            <button
+            <Button
               onClick={() => setMode('encode')}
-              className={`btn px-4 py-2 ${
-                mode === 'encode' ? 'btn-primary' : 'btn-secondary'
-              }`}
+              variant={mode === 'encode' ? 'default' : 'secondary'}
             >
               Encode
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setMode('decode')}
-              className={`btn px-4 py-2 ${
-                mode === 'decode' ? 'btn-primary' : 'btn-secondary'
-              }`}
+              variant={mode === 'decode' ? 'default' : 'secondary'}
             >
               Decode
-            </button>
+            </Button>
           </div>
           
           <div className="flex gap-2">
-            <button
+            <Button
               onClick={handleClearAll}
-              className="btn btn-ghost px-3 py-2 text-sm"
+              variant="ghost"
+              size="sm"
             >
               Clear All
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleModeToggle}
-              className="btn btn-secondary px-3 py-2 text-sm flex items-center gap-1"
+              variant="secondary"
+              size="sm"
+              className="flex items-center gap-1"
             >
               <RotateCw className="w-4 h-4" />
               Swap
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -101,15 +102,15 @@ const Base64Tool = () => {
           <label className="block text-sm font-medium mb-2">
             {mode === 'encode' ? 'Text to Encode' : 'Base64 to Decode'}
           </label>
-          <textarea
+          <Textarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             placeholder={
               mode === 'encode'
                 ? 'Enter text to encode as Base64...'
                 : 'Enter Base64 to decode...'
             }
-            className="tool-textarea"
+            className="min-h-[100px]"
           />
         </div>
 
@@ -125,13 +126,15 @@ const Base64Tool = () => {
               <label className="block text-sm font-medium">
                 {mode === 'encode' ? 'Encoded Base64' : 'Decoded Text'}
               </label>
-              <button
+              <Button
                 onClick={handleCopyOutput}
-                className="text-xs flex items-center gap-1 text-primary hover:text-primary/80"
+                variant="link"
+                size="sm"
+                className="text-xs flex items-center gap-1 text-primary hover:text-primary/80 h-auto p-0"
               >
                 <Copy className="w-3 h-3" />
                 Copy to Clipboard
-              </button>
+              </Button>
             </div>
             <div className="bg-muted p-4 rounded-md font-mono text-sm break-all whitespace-pre-wrap">
               {output}

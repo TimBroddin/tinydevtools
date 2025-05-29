@@ -125,4 +125,24 @@ export const convertCase = (text: string, caseType: CaseType): string => {
     default:
       return text;
   }
-}; 
+};
+
+export interface CaseOption {
+  key: CaseType;
+  label: string;
+  description: string;
+}
+
+export const caseOptions: CaseOption[] = [
+  { key: 'uppercase', label: 'UPPERCASE', description: 'ALL LETTERS UPPERCASE' },
+  { key: 'lowercase', label: 'lowercase', description: 'all letters lowercase' },
+  { key: 'capitalize', label: 'Capitalize', description: 'First letter uppercase' },
+  { key: 'titlecase', label: 'Title Case', description: 'First Letter Of Each Word' },
+  { key: 'camelcase', label: 'camelCase', description: 'firstWordLowercaseRestUppercase' },
+  { key: 'pascalcase', label: 'PascalCase', description: 'FirstLetterOfEachWordUppercase' },
+  { key: 'snakecase', label: 'snake_case', description: 'words_separated_by_underscores' },
+  { key: 'kebabcase', label: 'kebab-case', description: 'words-separated-by-hyphens' },
+  { key: 'randomcase', label: 'rAnDoM cAsE', description: 'rAnDoMlY cApItAlIzEd' },
+  { key: 'alternatingcase', label: 'aLtErNaTiNg', description: 'aLtErNaTiNg CaPiTaLiZaTiOn' },
+  { key: 'inversecase', label: 'iNVERSE cASE', description: 'fLIPS tHE cASE oF eACH lETTER' }
+]; 

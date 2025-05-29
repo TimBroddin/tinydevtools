@@ -8,6 +8,8 @@ import {
   formatWithSpaces,
   getValidCharsForBase 
 } from './utils';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 
 const numericSupportedBases: SupportedBase[] = [2, 8, 10, 16];
 
@@ -112,38 +114,38 @@ const NumberBaseConverter = () => {
     >
       <div className="space-y-6">
         <div className="flex flex-col md:flex-row gap-2 md:items-center justify-between">
-          <div className="flex flex-wrap gap-2">
-            <label className="text-sm font-medium">From Base:</label>
+          <div className="flex flex-wrap gap-2 items-center">
+            <label className="text-sm font-medium mr-2">From Base:</label>
             {numericSupportedBases.map((baseValue) => (
-              <button
+              <Button
                 key={baseValue}
                 onClick={() => handleBaseChange(baseValue)}
-                className={`btn px-3 py-1 text-sm ${
-                  fromBase === baseValue ? 'btn-primary' : 'btn-secondary'
-                }`}
+                variant={fromBase === baseValue ? 'default' : 'secondary'}
+                size="sm"
               >
                 {BASES[baseValue]} ({baseValue})
-              </button>
+              </Button>
             ))}
           </div>
           
-          <button
+          <Button
             onClick={handleClearAll}
-            className="btn btn-ghost px-3 py-2 text-sm"
+            variant="ghost"
+            size="sm"
           >
             Clear All
-          </button>
+          </Button>
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">
             Input ({BASES[fromBase]} - Base {fromBase})
           </label>
-          <textarea
+          <Textarea
             value={input}
             onChange={handleInputChange}
             placeholder={getPlaceholder()}
-            className="tool-textarea h-24"
+            className="min-h-[96px] font-mono text-sm"
           />
           {fromBase === 16 && (
             <p className="text-xs text-muted-foreground mt-1">
@@ -183,22 +185,26 @@ const NumberBaseConverter = () => {
                     </div>
                     <div className="flex gap-1">
                       {!isFromBase && value && (
-                        <button
+                        <Button
                           onClick={() => handleSwap(baseValue)}
-                          className="text-xs flex items-center gap-1 text-primary hover:text-primary/80 p-1"
+                          variant="ghost"
+                          size="icon"
+                          className="w-7 h-7"
                           title="Use this as input"
                         >
                           <RotateCw className="w-3 h-3" />
-                        </button>
+                        </Button>
                       )}
                       {value && (
-                        <button
+                        <Button
                           onClick={() => handleCopy(value)}
-                          className="text-xs flex items-center gap-1 text-primary hover:text-primary/80 p-1"
+                          variant="ghost"
+                          size="icon"
+                          className="w-7 h-7"
                           title="Copy to clipboard"
                         >
                           <Copy className="w-3 h-3" />
-                        </button>
+                        </Button>
                       )}
                     </div>
                   </div>

@@ -10,6 +10,7 @@ import {
   type ColorFormat, 
   type TailwindVersion 
 } from './utils';
+import { Button } from '@/components/ui/button';
 
 const TailwindColors = () => {
   const [version, setVersion] = useState<TailwindVersion>('v4');
@@ -24,11 +25,23 @@ const TailwindColors = () => {
   // Reset format if current format is not available for the selected version
   const handleVersionChange = (newVersion: TailwindVersion) => {
     setVersion(newVersion);
-    if (newVersion === 'v4' && !availableFormats.includes(format)) {
-      setFormat('oklch');
-    } else if (newVersion === 'v3' && format === 'oklch') {
-      setFormat('hex');
+
+    // Determine the valid formats for the NEW version
+    const validFormatsForNewVersion = newVersion === 'v3'
+      ? ['hex', 'rgb', 'hsl', 'tailwind']
+      : ['oklch', 'tailwind'];
+
+    // Check if the current format (from state) is valid for the new version
+    if (!validFormatsForNewVersion.includes(format)) {
+      // If the current format is not valid for the new version,
+      // set a default format for that new version.
+      if (newVersion === 'v4') {
+        setFormat('oklch'); // Default for v4
+      } else { // newVersion must be 'v3'
+        setFormat('hex');   // Default for v3 (e.g., if coming from 'oklch' in v4)
+      }
     }
+    // If the current format IS valid for the new version, no change to format is needed.
   };
 
   const handleCopyColor = async (colorName: string, shade: string, value: string) => {
@@ -84,35 +97,33 @@ const TailwindColors = () => {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div className="flex flex-wrap gap-2 items-center">
-            <span className="text-sm font-medium">Version:</span>
+            <span className="text-sm font-medium mr-2">Version:</span>
             <div className="flex gap-1">
               {(['v3', 'v4'] as TailwindVersion[]).map((v) => (
-                <button
+                <Button
                   key={v}
                   onClick={() => handleVersionChange(v)}
-                  className={`btn px-3 py-1 text-xs ${
-                    version === v ? 'btn-primary' : 'btn-secondary'
-                  }`}
+                  variant={version === v ? 'default' : 'secondary'}
+                  size="sm"
                 >
                   {v.toUpperCase()} {v === 'v3' ? '(RGB)' : '(OKLCH)'}
-                </button>
+                </Button>
               ))}
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2 items-center">
-            <span className="text-sm font-medium">Copy as:</span>
+            <span className="text-sm font-medium mr-2">Copy as:</span>
             <div className="flex gap-1">
               {availableFormats.map((f) => (
-                <button
+                <Button
                   key={f}
                   onClick={() => setFormat(f as ColorFormat)}
-                  className={`btn px-3 py-1 text-xs ${
-                    format === f ? 'btn-primary' : 'btn-secondary'
-                  }`}
+                  variant={format === f ? 'default' : 'secondary'}
+                  size="sm"
                 >
                   {f.toUpperCase()}
-                </button>
+                </Button>
               ))}
             </div>
           </div>

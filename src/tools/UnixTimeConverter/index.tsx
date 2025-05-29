@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import { convertTimestamp, formatTimestamp } from './utils';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const UnixTimeConverter = () => {
   const [timestamp, setTimestamp] = useState<string>('');
@@ -89,19 +91,19 @@ const UnixTimeConverter = () => {
             Unix Timestamp
           </label>
           <div className="flex gap-2">
-            <input
+            <Input
               type="text"
               value={timestamp}
               onChange={handleTimestampChange}
-              className="tool-input"
               placeholder="Enter Unix timestamp"
             />
-            <button
+            <Button
               onClick={useCurrentTime}
-              className="btn btn-secondary px-3 py-2 whitespace-nowrap"
+              variant="secondary"
+              className="whitespace-nowrap"
             >
               Now
-            </button>
+            </Button>
           </div>
           <p className="text-xs mt-2 text-muted-foreground">
             Current timestamp: {currentTimestamp}
@@ -113,23 +115,21 @@ const UnixTimeConverter = () => {
             Human-readable Date & Time
           </label>
           <div className="flex gap-2">
-            <input
+            <Input
               type="date"
               value={date}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setDate(e.target.value);
                 handleDateTimeChange();
               }}
-              className="tool-input"
             />
-            <input
+            <Input
               type="time"
               value={time}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setTime(e.target.value);
                 handleDateTimeChange();
               }}
-              className="tool-input"
               step="1"
             />
           </div>
