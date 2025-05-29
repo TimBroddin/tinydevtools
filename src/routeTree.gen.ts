@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as TailwindColorsImport } from './routes/tailwind/colors'
 import { Route as GeneratorsUuidImport } from './routes/generators/uuid'
+import { Route as GeneratorsFakeDataImport } from './routes/generators/fake-data'
 import { Route as FormattersJsonImport } from './routes/formatters/json'
 import { Route as DebuggersJwtImport } from './routes/debuggers/jwt'
 import { Route as ConvertersUrlencodeDecodeImport } from './routes/converters/urlencode-decode'
@@ -40,6 +41,12 @@ const TailwindColorsRoute = TailwindColorsImport.update({
 const GeneratorsUuidRoute = GeneratorsUuidImport.update({
   id: '/generators/uuid',
   path: '/generators/uuid',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GeneratorsFakeDataRoute = GeneratorsFakeDataImport.update({
+  id: '/generators/fake-data',
+  path: '/generators/fake-data',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -158,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FormattersJsonImport
       parentRoute: typeof rootRoute
     }
+    '/generators/fake-data': {
+      id: '/generators/fake-data'
+      path: '/generators/fake-data'
+      fullPath: '/generators/fake-data'
+      preLoaderRoute: typeof GeneratorsFakeDataImport
+      parentRoute: typeof rootRoute
+    }
     '/generators/uuid': {
       id: '/generators/uuid'
       path: '/generators/uuid'
@@ -187,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
+  '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
@@ -201,6 +216,7 @@ export interface FileRoutesByTo {
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
+  '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
@@ -216,6 +232,7 @@ export interface FileRoutesById {
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
+  '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
@@ -232,6 +249,7 @@ export interface FileRouteTypes {
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
     | '/formatters/json'
+    | '/generators/fake-data'
     | '/generators/uuid'
     | '/tailwind/colors'
   fileRoutesByTo: FileRoutesByTo
@@ -245,6 +263,7 @@ export interface FileRouteTypes {
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
     | '/formatters/json'
+    | '/generators/fake-data'
     | '/generators/uuid'
     | '/tailwind/colors'
   id:
@@ -258,6 +277,7 @@ export interface FileRouteTypes {
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
     | '/formatters/json'
+    | '/generators/fake-data'
     | '/generators/uuid'
     | '/tailwind/colors'
   fileRoutesById: FileRoutesById
@@ -273,6 +293,7 @@ export interface RootRouteChildren {
   ConvertersUrlencodeDecodeRoute: typeof ConvertersUrlencodeDecodeRoute
   DebuggersJwtRoute: typeof DebuggersJwtRoute
   FormattersJsonRoute: typeof FormattersJsonRoute
+  GeneratorsFakeDataRoute: typeof GeneratorsFakeDataRoute
   GeneratorsUuidRoute: typeof GeneratorsUuidRoute
   TailwindColorsRoute: typeof TailwindColorsRoute
 }
@@ -287,6 +308,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConvertersUrlencodeDecodeRoute: ConvertersUrlencodeDecodeRoute,
   DebuggersJwtRoute: DebuggersJwtRoute,
   FormattersJsonRoute: FormattersJsonRoute,
+  GeneratorsFakeDataRoute: GeneratorsFakeDataRoute,
   GeneratorsUuidRoute: GeneratorsUuidRoute,
   TailwindColorsRoute: TailwindColorsRoute,
 }
@@ -310,6 +332,7 @@ export const routeTree = rootRoute
         "/converters/urlencode-decode",
         "/debuggers/jwt",
         "/formatters/json",
+        "/generators/fake-data",
         "/generators/uuid",
         "/tailwind/colors"
       ]
@@ -340,6 +363,9 @@ export const routeTree = rootRoute
     },
     "/formatters/json": {
       "filePath": "formatters/json.tsx"
+    },
+    "/generators/fake-data": {
+      "filePath": "generators/fake-data.tsx"
     },
     "/generators/uuid": {
       "filePath": "generators/uuid.tsx"

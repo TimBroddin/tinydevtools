@@ -26,7 +26,10 @@ const tools = [
   },
   {
     category: "Generators",
-    items: [{ name: "Uuid", path: "/generators/uuid" }],
+    items: [
+      { name: "Uuid", path: "/generators/uuid" },
+      { name: "Fake Data", path: "/generators/fake-data" },
+    ],
   },
   {
     category: "Debuggers",
@@ -55,7 +58,7 @@ const Sidebar = ({ className }: SidebarProps) => {
               <li key={tool.path}>
                 <Link
                   to={tool.path}
-                  className={
+                  className={ 
                     "block w-full rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
                   }
                 >
