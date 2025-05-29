@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as TailwindColorsImport } from './routes/tailwind/colors'
 import { Route as GeneratorsUuidImport } from './routes/generators/uuid'
+import { Route as GeneratorsLoremIpsumImport } from './routes/generators/lorem-ipsum'
 import { Route as GeneratorsFakeDataImport } from './routes/generators/fake-data'
 import { Route as FormattersJsonImport } from './routes/formatters/json'
 import { Route as DebuggersJwtImport } from './routes/debuggers/jwt'
@@ -41,6 +42,12 @@ const TailwindColorsRoute = TailwindColorsImport.update({
 const GeneratorsUuidRoute = GeneratorsUuidImport.update({
   id: '/generators/uuid',
   path: '/generators/uuid',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GeneratorsLoremIpsumRoute = GeneratorsLoremIpsumImport.update({
+  id: '/generators/lorem-ipsum',
+  path: '/generators/lorem-ipsum',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -172,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GeneratorsFakeDataImport
       parentRoute: typeof rootRoute
     }
+    '/generators/lorem-ipsum': {
+      id: '/generators/lorem-ipsum'
+      path: '/generators/lorem-ipsum'
+      fullPath: '/generators/lorem-ipsum'
+      preLoaderRoute: typeof GeneratorsLoremIpsumImport
+      parentRoute: typeof rootRoute
+    }
     '/generators/uuid': {
       id: '/generators/uuid'
       path: '/generators/uuid'
@@ -202,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
+  '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
@@ -217,6 +232,7 @@ export interface FileRoutesByTo {
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
+  '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
@@ -233,6 +249,7 @@ export interface FileRoutesById {
   '/debuggers/jwt': typeof DebuggersJwtRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
+  '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
@@ -250,6 +267,7 @@ export interface FileRouteTypes {
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/fake-data'
+    | '/generators/lorem-ipsum'
     | '/generators/uuid'
     | '/tailwind/colors'
   fileRoutesByTo: FileRoutesByTo
@@ -264,6 +282,7 @@ export interface FileRouteTypes {
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/fake-data'
+    | '/generators/lorem-ipsum'
     | '/generators/uuid'
     | '/tailwind/colors'
   id:
@@ -278,6 +297,7 @@ export interface FileRouteTypes {
     | '/debuggers/jwt'
     | '/formatters/json'
     | '/generators/fake-data'
+    | '/generators/lorem-ipsum'
     | '/generators/uuid'
     | '/tailwind/colors'
   fileRoutesById: FileRoutesById
@@ -294,6 +314,7 @@ export interface RootRouteChildren {
   DebuggersJwtRoute: typeof DebuggersJwtRoute
   FormattersJsonRoute: typeof FormattersJsonRoute
   GeneratorsFakeDataRoute: typeof GeneratorsFakeDataRoute
+  GeneratorsLoremIpsumRoute: typeof GeneratorsLoremIpsumRoute
   GeneratorsUuidRoute: typeof GeneratorsUuidRoute
   TailwindColorsRoute: typeof TailwindColorsRoute
 }
@@ -309,6 +330,7 @@ const rootRouteChildren: RootRouteChildren = {
   DebuggersJwtRoute: DebuggersJwtRoute,
   FormattersJsonRoute: FormattersJsonRoute,
   GeneratorsFakeDataRoute: GeneratorsFakeDataRoute,
+  GeneratorsLoremIpsumRoute: GeneratorsLoremIpsumRoute,
   GeneratorsUuidRoute: GeneratorsUuidRoute,
   TailwindColorsRoute: TailwindColorsRoute,
 }
@@ -333,6 +355,7 @@ export const routeTree = rootRoute
         "/debuggers/jwt",
         "/formatters/json",
         "/generators/fake-data",
+        "/generators/lorem-ipsum",
         "/generators/uuid",
         "/tailwind/colors"
       ]
@@ -366,6 +389,9 @@ export const routeTree = rootRoute
     },
     "/generators/fake-data": {
       "filePath": "generators/fake-data.tsx"
+    },
+    "/generators/lorem-ipsum": {
+      "filePath": "generators/lorem-ipsum.tsx"
     },
     "/generators/uuid": {
       "filePath": "generators/uuid.tsx"

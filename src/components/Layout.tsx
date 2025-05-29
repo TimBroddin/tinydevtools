@@ -1,7 +1,24 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useTheme } from "../contexts/ThemeContext";
-import { Terminal, Sun, Moon, Menu } from "lucide-react";
+import {
+  Terminal,
+  Sun,
+  Moon,
+  Menu,
+  Clock,
+  CaseSensitive,
+  Hash,
+  Database,
+  Braces,
+  Fingerprint,
+  Palette,
+  ListChecks,
+  Binary,
+  Replace,
+  BookCopy,
+  Type,
+} from "lucide-react";
 import { cn } from "../utils/cn";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -19,42 +36,76 @@ import {
 interface SidebarProps {
   className?: string;
   setOpenCommand: React.Dispatch<React.SetStateAction<boolean>>;
+  tools: ToolDefinition[];
 }
 
-const tools = [
+interface ToolItem {
+  name: string;
+  path: string;
+  icon: React.ElementType;
+  keywords?: string[];
+}
+
+interface ToolDefinition {
+  category: string;
+  items: ToolItem[];
+}
+
+const toolsData: ToolDefinition[] = [
   {
     category: "Converters",
     items: [
-      { name: "Unix Time", path: "/converters/unix-time" },
-      { name: "Base64", path: "/converters/base64" },
-      { name: "URL Encode/Decode", path: "/converters/urlencode-decode" },
-      { name: "Hash Generator & Verifier", path: "/converters/hash" },
-      { name: "Text Case Converter", path: "/converters/textcase" },
-      { name: "Number Base Converter", path: "/converters/number-base" },
+      { name: "Unix Time", path: "/converters/unix-time", icon: Clock, keywords: ["timestamp", "epoch"] },
+      { name: "Base64", path: "/converters/base64", icon: Binary, keywords: ["encode", "decode"] },
+      {
+        name: "URL Encode/Decode",
+        path: "/converters/urlencode-decode",
+        icon: Replace,
+        keywords: ["uri", "percent", "escape", "unescape"],
+      },
+      {
+        name: "Hash Generator & Verifier",
+        path: "/converters/hash",
+        icon: Hash,
+        keywords: ["md5", "sha1", "sha256", "sha512", "checksum"],
+      },
+      {
+        name: "Text Case Converter",
+        path: "/converters/textcase",
+        icon: CaseSensitive,
+        keywords: ["uppercase", "lowercase", "titlecase", "camelcase", "snakecase", "kebabcase"],
+      },
+      {
+        name: "Number Base Converter",
+        path: "/converters/number-base",
+        icon: Database,
+        keywords: ["binary", "octal", "decimal", "hexadecimal", "radix"],
+      },
     ],
   },
   {
     category: "Generators",
     items: [
-      { name: "Uuid", path: "/generators/uuid" },
-      { name: "Fake Data", path: "/generators/fake-data" },
+      { name: "Uuid", path: "/generators/uuid", icon: Fingerprint, keywords: ["guid", "unique identifier"] },
+      { name: "Fake Data", path: "/generators/fake-data", icon: BookCopy, keywords: ["dummy", "mock", "placeholder", "address", "name", "email", "phone", "date", "time", "number", "color", "word", "sentence", "paragraph"] },
+      { name: "Lorem Ipsum", path: "/generators/lorem-ipsum", icon: Type, keywords: ["placeholder text", "text generator", "dummy content"] },
     ],
   },
   {
     category: "Debuggers",
-    items: [{ name: "JWT", path: "/debuggers/jwt" }],
+    items: [{ name: "JWT", path: "/debuggers/jwt", icon: ListChecks, keywords: ["json web token", "bearer", "auth"] }],
   },
   {
     category: "Formatters",
-    items: [{ name: "JSON", path: "/formatters/json" }],
+    items: [{ name: "JSON", path: "/formatters/json", icon: Braces, keywords: ["beautify", "prettify", "minify", "lint"] }],
   },
   {
     category: "Tailwind",
-    items: [{ name: "Colors", path: "/tailwind/colors" }],
+    items: [{ name: "Colors", path: "/tailwind/colors", icon: Palette, keywords: ["css", "stylesheet", "design"] }],
   },
 ];
 
-const Sidebar = ({ className, setOpenCommand }: SidebarProps) => {
+const Sidebar = ({ className, setOpenCommand, tools }: SidebarProps) => {
   const [modifierKey, setModifierKey] = useState("⌘");
 
   useEffect(() => {
@@ -89,10 +140,11 @@ const Sidebar = ({ className, setOpenCommand }: SidebarProps) => {
                 <li key={tool.path}>
                   <Link
                     to={tool.path}
-                    className={ 
-                      "block w-full rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                    className={
+                      "flex items-center gap-2 w-full rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
                     }
                   >
+                    <tool.icon className="w-4 h-4 opacity-50" />
                     {tool.name}
                   </Link>
                 </li>
@@ -138,7 +190,7 @@ const Layout = () => {
             <span className="font-semibold">tinydev.tools</span>
           </Link>
         </div>
-        <Sidebar setOpenCommand={setOpenCommand} />
+        <Sidebar setOpenCommand={setOpenCommand} tools={toolsData} />
       </aside>
 
       <div className="flex-1 flex flex-col">
@@ -155,7 +207,7 @@ const Layout = () => {
                   <Terminal className="w-5 h-5 text-primary" />
                   <span className="font-semibold">tinydev.tools</span>
                 </div>
-                <Sidebar setOpenCommand={setOpenCommand} />
+                <Sidebar setOpenCommand={setOpenCommand} tools={toolsData} />
               </SheetContent>
             </Sheet>
 
@@ -190,16 +242,18 @@ const Layout = () => {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          {tools.map((group) => (
+          {toolsData.map((group) => (
             <CommandGroup key={group.category} heading={group.category}>
               {group.items.map((item) => (
                 <CommandItem
                   key={item.path}
-                  value={item.name}
+                  value={`${item.name} ${item.keywords?.join(" ") || ""}`}
                   onSelect={() => {
                     runCommand(() => navigate({ to: item.path }));
                   }}
+                  className="flex items-center gap-2"
                 >
+                  <item.icon className="w-4 h-4 opacity-50" />
                   {item.name}
                 </CommandItem>
               ))}
