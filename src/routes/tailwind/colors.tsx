@@ -7,7 +7,7 @@ export const Route = createFileRoute('/tailwind/colors')({
     return {
       meta: [
         {
-          title: "tinydev.tools - Tailwind Colors",
+          title: "Tailwind Colors - tinydev.tools",
         },
       ],
     };
