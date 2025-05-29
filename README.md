@@ -36,6 +36,7 @@ yarn dev
 - **TypeScript** - Type safety
 - **Vite** - Build tool and dev server
 - **TanStack Router** - Type-safe routing
+- **Tanstack Start** - Full-stack framework
 - **Tailwind CSS** - Styling
 - **Lucide React** - Icons
 - **Shadcn** - UI components
