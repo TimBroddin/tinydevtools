@@ -29,15 +29,15 @@ export function generateUuid(type: string, count: number = 1): string[] {
         uuids.push(v1());
         break;
       case 'v3':
-        // Using URL namespace and a random string for v3
-        uuids.push(v3(Date.now().toString(), NAMESPACE_URL));
+        // Using URL namespace and a unique string for each iteration
+        uuids.push(v3(`${Date.now()}-${i}-${Math.random()}`, NAMESPACE_URL));
         break;
       case 'v4':
         uuids.push(v4());
         break;
       case 'v5':
-        // Using URL namespace and a random string for v5
-        uuids.push(v5(Date.now().toString(), NAMESPACE_URL));
+        // Using URL namespace and a unique string for each iteration
+        uuids.push(v5(`${Date.now()}-${i}-${Math.random()}`, NAMESPACE_URL));
         break;
       case 'ulid':
         uuids.push(generateUlid());
