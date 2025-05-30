@@ -18,7 +18,7 @@ export const seo = ({
       { name: 'twitter:creator', content: '@broddin' },
       { name: 'twitter:site', content: 'https://tinydev.tools' },
       { name: 'og:type', content: 'website' },
-      { name: 'og:title', content: title ? `${title} - tinytools.dev` : 'tinytools.dev' },
+      { name: 'og:title', content: title ? `${title} - tinydev.tools` : 'tinydev.tools' },
       { name: 'og:description', content: description },
       ...(image
         ? [
