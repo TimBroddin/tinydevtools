@@ -6,16 +6,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { fetchWhoisData } from './server';
 
+// Define the expected shape of the data returned by the server
+interface WhoisServerResponse {
+  data: string | Record<string, any>; // This is the actual WHOIS information payload
+}
+
 export default function WhoisTool() {
   const [domain, setDomain] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const { data, error, isLoading, refetch } = useQuery({
+  const { data, error, isLoading, refetch } = useQuery<WhoisServerResponse | null, Error>({
     queryKey: ["whoisLookup", domain],
     queryFn: async () => {
       if (!domain) return null;
       // Directly call the server function
-      return fetchWhoisData({ data: { domain } });
+      // Assumes fetchWhoisData returns a Promise that resolves to WhoisServerResponse or null
+      return fetchWhoisData({ data: { domain } }) as Promise<WhoisServerResponse | null>;
     },
     enabled: false,
     retry: false,
@@ -46,6 +52,7 @@ export default function WhoisTool() {
               setIsSubmitted(false);
             }}
             placeholder="e.g., example.com"
+            autoFocus
           />
         </div>
 

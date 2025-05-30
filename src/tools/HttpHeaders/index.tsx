@@ -110,6 +110,7 @@ export default function HttpHeadersTool() {
           <Label htmlFor="url-input">URL</Label>
           <Input
             id="url-input"
+            autoFocus
             type="text"
             value={url}
             onChange={(e) => {

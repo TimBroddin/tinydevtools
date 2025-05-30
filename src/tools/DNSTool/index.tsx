@@ -78,6 +78,7 @@ export default function DNSTool() {
           <Input
             type="text"
             id="domain"
+            autoFocus
             value={domain}
             onChange={(e) => {
               setDomain(e.target.value);

@@ -103,6 +103,7 @@ const Base64Tool = () => {
             {mode === 'encode' ? 'Text to Encode' : 'Base64 to Decode'}
           </label>
           <Textarea
+            autoFocus
             value={input}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             placeholder={

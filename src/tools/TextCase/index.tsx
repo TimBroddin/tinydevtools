@@ -78,6 +78,7 @@ const TextCase = () => {
             Enter Text to Convert
           </label>
           <Textarea
+            autoFocus
             value={input}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             placeholder="Type or paste your text here..."

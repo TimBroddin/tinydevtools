@@ -119,6 +119,7 @@ const JwtDebugger = () => {
             </div>
           </div>
           <Textarea
+            autoFocus
             value={token}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setToken(e.target.value);

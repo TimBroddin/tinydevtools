@@ -142,6 +142,7 @@ const NumberBaseConverter = () => {
             Input ({BASES[fromBase]} - Base {fromBase})
           </label>
           <Textarea
+            autoFocus
             value={input}
             onChange={handleInputChange}
             placeholder={getPlaceholder()}

@@ -211,6 +211,7 @@ const HashTool = () => {
               Text to Hash
             </label>
             <Textarea
+              autoFocus
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Enter text to generate hashes..."

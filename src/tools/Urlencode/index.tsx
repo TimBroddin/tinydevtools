@@ -101,6 +101,7 @@ const URLEncodeTool = () => {
             {mode === 'encode' ? 'Text to Encode' : 'URL Encoded Text to Decode'}
           </label>
           <Textarea
+            autoFocus
             value={input}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             placeholder={
