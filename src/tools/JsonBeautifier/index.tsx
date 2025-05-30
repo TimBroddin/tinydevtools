@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs2015, vs } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { useTheme } from '../../contexts/ThemeContext';
+import { useTheme } from '@/hooks/useTheme';
 import { formatJson, validateJson } from './utils';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';

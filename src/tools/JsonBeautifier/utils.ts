@@ -13,30 +13,28 @@ export const formatJson = (jsonString: string, spaces: number): string => {
   return JSON.stringify(parsed, null, spaces);
 };
 
-export const detectJsonType = (json: any): string => {
+export const detectJsonType = (json: unknown): string => {
   if (json === null) return 'null';
   if (Array.isArray(json)) return 'array';
   return typeof json;
 };
 
-export const analyzeJson = (json: any): {
+interface JsonAnalysis {
   type: string;
   size: number;
   keyCount?: number;
   arrayLength?: number;
-} => {
-  const type = detectJsonType(json);
-  let result: any = { type };
+}
 
-  if (type === 'object') {
-    const keys = Object.keys(json);
+export const analyzeJson = (json: unknown): JsonAnalysis => {
+  const type = detectJsonType(json);
+  const result: JsonAnalysis = { type, size: JSON.stringify(json).length };
+
+  if (type === 'object' && json !== null) {
+    const keys = Object.keys(json as Record<string, unknown>);
     result.keyCount = keys.length;
-    result.size = JSON.stringify(json).length;
   } else if (type === 'array') {
-    result.arrayLength = json.length;
-    result.size = JSON.stringify(json).length;
-  } else {
-    result.size = JSON.stringify(json).length;
+    result.arrayLength = (json as unknown[]).length;
   }
 
   return result;

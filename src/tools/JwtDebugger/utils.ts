@@ -17,7 +17,7 @@ const base64UrlDecode = (str: string): string => {
 
     const decoded = decodeURIComponent(escape(atob(base64)));
     return decoded;
-  } catch (error) {
+  } catch {
     throw new Error('Invalid base64url string');
   }
 };
@@ -26,7 +26,7 @@ const base64UrlEncode = (str: string): string => {
   try {
     const base64 = btoa(unescape(encodeURIComponent(str)));
     return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-  } catch (error) {
+  } catch {
     throw new Error('Invalid string for base64url encoding');
   }
 };
@@ -70,7 +70,7 @@ export const verifyJwt = async (token: string, secret: string, algorithm: JwtAlg
     const expectedSignatureB64 = await arrayBufferToBase64Url(expectedSignature);
     
     return signatureB64 === expectedSignatureB64;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

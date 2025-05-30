@@ -2,7 +2,7 @@ export const encodeBase64 = (str: string): string => {
   try {
     // For browser environment
     return btoa(unescape(encodeURIComponent(str)));
-  } catch (error) {
+  } catch {
     throw new Error('Invalid input for Base64 encoding');
   }
 };
@@ -11,7 +11,7 @@ export const decodeBase64 = (str: string): string => {
   try {
     // For browser environment
     return decodeURIComponent(escape(atob(str)));
-  } catch (error) {
+  } catch {
     throw new Error('Invalid Base64 string');
   }
 };
@@ -19,7 +19,7 @@ export const decodeBase64 = (str: string): string => {
 export const isValidBase64 = (str: string): boolean => {
   try {
     return btoa(atob(str)) === str;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

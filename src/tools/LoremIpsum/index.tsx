@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ToolLayout from "../../components/ToolLayout";
 import { Copy, Check, RefreshCw } from "lucide-react";
 import { generateLoremIpsum, LoremIpsumOptions, LoremUnit } from "./utils";
@@ -18,14 +18,14 @@ const LoremIpsumTool = () => {
   const [generatedText, setGeneratedText] = useState<string>("");
   const [copied, setCopied] = useState<boolean>(false);
 
-  const handleGenerate = () => {
+  const handleGenerate = useCallback(() => {
     const text = generateLoremIpsum(options);
     setGeneratedText(text);
-  };
+  }, [options]);
 
   useEffect(() => {
     handleGenerate();
-  }, [options]);
+  }, [options, handleGenerate]);
 
   const handleCopy = async () => {
     try {

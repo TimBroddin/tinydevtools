@@ -13,6 +13,9 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as TailwindColorsImport } from './routes/tailwind/colors'
+import { Route as NetworkWhoisImport } from './routes/network/whois'
+import { Route as NetworkHeadersImport } from './routes/network/headers'
+import { Route as NetworkDnsImport } from './routes/network/dns'
 import { Route as GeneratorsUuidImport } from './routes/generators/uuid'
 import { Route as GeneratorsLoremIpsumImport } from './routes/generators/lorem-ipsum'
 import { Route as GeneratorsFakeDataImport } from './routes/generators/fake-data'
@@ -36,6 +39,24 @@ const IndexRoute = IndexImport.update({
 const TailwindColorsRoute = TailwindColorsImport.update({
   id: '/tailwind/colors',
   path: '/tailwind/colors',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const NetworkWhoisRoute = NetworkWhoisImport.update({
+  id: '/network/whois',
+  path: '/network/whois',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const NetworkHeadersRoute = NetworkHeadersImport.update({
+  id: '/network/headers',
+  path: '/network/headers',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const NetworkDnsRoute = NetworkDnsImport.update({
+  id: '/network/dns',
+  path: '/network/dns',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -193,6 +214,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GeneratorsUuidImport
       parentRoute: typeof rootRoute
     }
+    '/network/dns': {
+      id: '/network/dns'
+      path: '/network/dns'
+      fullPath: '/network/dns'
+      preLoaderRoute: typeof NetworkDnsImport
+      parentRoute: typeof rootRoute
+    }
+    '/network/headers': {
+      id: '/network/headers'
+      path: '/network/headers'
+      fullPath: '/network/headers'
+      preLoaderRoute: typeof NetworkHeadersImport
+      parentRoute: typeof rootRoute
+    }
+    '/network/whois': {
+      id: '/network/whois'
+      path: '/network/whois'
+      fullPath: '/network/whois'
+      preLoaderRoute: typeof NetworkWhoisImport
+      parentRoute: typeof rootRoute
+    }
     '/tailwind/colors': {
       id: '/tailwind/colors'
       path: '/tailwind/colors'
@@ -218,6 +260,9 @@ export interface FileRoutesByFullPath {
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/network/dns': typeof NetworkDnsRoute
+  '/network/headers': typeof NetworkHeadersRoute
+  '/network/whois': typeof NetworkWhoisRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
 
@@ -234,6 +279,9 @@ export interface FileRoutesByTo {
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/network/dns': typeof NetworkDnsRoute
+  '/network/headers': typeof NetworkHeadersRoute
+  '/network/whois': typeof NetworkWhoisRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
 
@@ -251,6 +299,9 @@ export interface FileRoutesById {
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/network/dns': typeof NetworkDnsRoute
+  '/network/headers': typeof NetworkHeadersRoute
+  '/network/whois': typeof NetworkWhoisRoute
   '/tailwind/colors': typeof TailwindColorsRoute
 }
 
@@ -269,6 +320,9 @@ export interface FileRouteTypes {
     | '/generators/fake-data'
     | '/generators/lorem-ipsum'
     | '/generators/uuid'
+    | '/network/dns'
+    | '/network/headers'
+    | '/network/whois'
     | '/tailwind/colors'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -284,6 +338,9 @@ export interface FileRouteTypes {
     | '/generators/fake-data'
     | '/generators/lorem-ipsum'
     | '/generators/uuid'
+    | '/network/dns'
+    | '/network/headers'
+    | '/network/whois'
     | '/tailwind/colors'
   id:
     | '__root__'
@@ -299,6 +356,9 @@ export interface FileRouteTypes {
     | '/generators/fake-data'
     | '/generators/lorem-ipsum'
     | '/generators/uuid'
+    | '/network/dns'
+    | '/network/headers'
+    | '/network/whois'
     | '/tailwind/colors'
   fileRoutesById: FileRoutesById
 }
@@ -316,6 +376,9 @@ export interface RootRouteChildren {
   GeneratorsFakeDataRoute: typeof GeneratorsFakeDataRoute
   GeneratorsLoremIpsumRoute: typeof GeneratorsLoremIpsumRoute
   GeneratorsUuidRoute: typeof GeneratorsUuidRoute
+  NetworkDnsRoute: typeof NetworkDnsRoute
+  NetworkHeadersRoute: typeof NetworkHeadersRoute
+  NetworkWhoisRoute: typeof NetworkWhoisRoute
   TailwindColorsRoute: typeof TailwindColorsRoute
 }
 
@@ -332,6 +395,9 @@ const rootRouteChildren: RootRouteChildren = {
   GeneratorsFakeDataRoute: GeneratorsFakeDataRoute,
   GeneratorsLoremIpsumRoute: GeneratorsLoremIpsumRoute,
   GeneratorsUuidRoute: GeneratorsUuidRoute,
+  NetworkDnsRoute: NetworkDnsRoute,
+  NetworkHeadersRoute: NetworkHeadersRoute,
+  NetworkWhoisRoute: NetworkWhoisRoute,
   TailwindColorsRoute: TailwindColorsRoute,
 }
 
@@ -357,6 +423,9 @@ export const routeTree = rootRoute
         "/generators/fake-data",
         "/generators/lorem-ipsum",
         "/generators/uuid",
+        "/network/dns",
+        "/network/headers",
+        "/network/whois",
         "/tailwind/colors"
       ]
     },
@@ -395,6 +464,15 @@ export const routeTree = rootRoute
     },
     "/generators/uuid": {
       "filePath": "generators/uuid.tsx"
+    },
+    "/network/dns": {
+      "filePath": "network/dns.tsx"
+    },
+    "/network/headers": {
+      "filePath": "network/headers.tsx"
+    },
+    "/network/whois": {
+      "filePath": "network/whois.tsx"
     },
     "/tailwind/colors": {
       "filePath": "tailwind/colors.tsx"

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { Link, Outlet, useNavigate } from "@tanstack/react-router";
-import { useTheme } from "../contexts/ThemeContext";
+import { useTheme } from "@/hooks/useTheme";
 import {
   Terminal,
   Sun,
@@ -18,6 +18,9 @@ import {
   Replace,
   BookCopy,
   Type,
+  Globe,
+  ArrowRightLeft,
+  Search,
 } from "lucide-react";
 import { cn } from "../utils/cn";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -32,6 +35,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 interface SidebarProps {
   className?: string;
@@ -103,6 +107,14 @@ const toolsData: ToolDefinition[] = [
     category: "Tailwind",
     items: [{ name: "Colors", path: "/tailwind/colors", icon: Palette, keywords: ["css", "stylesheet", "design"] }],
   },
+  {
+    "category": "Net",
+    items: [
+      { name: "DNS Lookup", path: "/network/dns", icon: Globe, keywords: ["dns", "lookup", "domain", "network"] },
+      { name: "HTTP Headers", path: "/network/headers", icon: ArrowRightLeft, keywords: ["cors", "headers", "network"] },
+      { name: "WHOIS Lookup", path: "/network/whois", icon: Search, keywords: ["whois", "lookup", "domain", "network"] },
+    ]
+  }
 ];
 
 const Sidebar = ({ className, setOpenCommand, tools }: SidebarProps) => {
@@ -162,6 +174,7 @@ const Layout = () => {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [openCommand, setOpenCommand] = React.useState(false);
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -181,6 +194,7 @@ const Layout = () => {
   }, []);
 
   return (
+    <QueryClientProvider client={queryClient}>
     <div className="flex min-h-screen gap-2">
       {/* Sidebar for desktop */}
       <aside className="hidden lg:block w-64 border-r border-border/40">
@@ -262,6 +276,7 @@ const Layout = () => {
         </CommandList>
       </CommandDialog>
     </div>
+    </QueryClientProvider>
   );
 };
 

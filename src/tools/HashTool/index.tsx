@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import { Copy, FileText, Hash, Check, X, Info } from 'lucide-react';
 import { 
@@ -42,20 +42,7 @@ const HashTool = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const compareFileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (mode === 'text' && input.trim()) {
-      generateHashes();
-    } else if (mode === 'file' && selectedFile) {
-      generateFileHashes();
-    } else if (mode === 'compare') {
-      performVerification();
-    } else {
-      setHashes({} as Record<HashAlgorithm, string>);
-      setError('');
-    }
-  }, [input, selectedFile, mode, knownHash, compareAlgorithm, compareInput, compareFile, compareMode]);
-
-  const performVerification = async () => {
+  const performVerification = useCallback(async () => {
     if (!knownHash.trim()) {
       setVerificationResult(null);
       return;
@@ -81,9 +68,9 @@ const HashTool = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [knownHash, compareMode, compareInput, compareFile, compareAlgorithm]);
 
-  const generateHashes = async () => {
+  const generateHashes = useCallback(async () => {
     if (!input.trim()) return;
     
     setIsLoading(true);
@@ -97,9 +84,9 @@ const HashTool = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [input]);
 
-  const generateFileHashes = async () => {
+  const generateFileHashes = useCallback(async () => {
     if (!selectedFile) return;
     
     setIsLoading(true);
@@ -114,8 +101,22 @@ const HashTool = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [selectedFile]);
 
+  useEffect(() => {
+    if (mode === 'text' && input.trim()) {
+      generateHashes();
+    } else if (mode === 'file' && selectedFile) {
+      generateFileHashes();
+    } else if (mode === 'compare') {
+      performVerification();
+    } else {
+      setHashes({} as Record<HashAlgorithm, string>);
+      setError('');
+    }
+  }, [input, selectedFile, mode, knownHash, compareAlgorithm, compareInput, compareFile, compareMode, generateHashes, generateFileHashes, performVerification]);
+
+  
   const readFileAsText = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
