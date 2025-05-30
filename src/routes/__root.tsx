@@ -23,8 +23,8 @@ export const Route = createRootRoute({
         title:'tinydev.tools',
       },
       {
-        rel: "icon",
-        href: "/favicon.svg",
+        name: 'theme-color',
+        content: '#000000',
       },
       ...seo({
         title: null,
@@ -34,8 +34,16 @@ export const Route = createRootRoute({
     ],
     links: [
       {
+        rel: "icon",
+        href: "/icon-512.png",
+      },
+      {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "manifest",
+        href: "/manifest.json",
       },
     ],
     scripts: [
