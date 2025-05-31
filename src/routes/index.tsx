@@ -85,6 +85,18 @@ function RouteComponent() {
           <div className="mt-16 text-xs text-muted-foreground/60 font-mono">
             <span className="text-primary">tip:</span> use the sidebar to navigate tools →
           </div>
+
+          {/* Attribution and Slogan */}
+          <div className="mt-12 text-xs text-muted-foreground/60 font-mono">
+            <p>
+              Made by <a href="https://broddin.be" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Tim Broddin</a>
+            </p>
+            <p className="mt-2">
+              <a href="https://youtu.be/vqg0QbGE5bw?si=WwQzlsionrLDZhDh&t=124" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                "A small effort for Broddin projects might mean a world of difference"
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
