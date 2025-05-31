@@ -161,6 +161,31 @@ const UnixTimeConverter = () => {
           </div>
         </div>
       )}
+
+      {/* Information Section */}
+      <div className="mt-8 space-y-4">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+          About Unix Time (Epoch Time)
+        </h3>
+        <div className="text-sm text-muted-foreground space-y-3">
+          <p>
+            Unix time, also known as Epoch time, POSIX time, or Unix timestamp, is a system for describing a point in time.
+            It is the number of seconds that have elapsed since 00:00:00 Coordinated Universal Time (UTC), Thursday, 1 January 1970, not counting leap seconds.
+          </p>
+          <div className="space-y-1">
+            <p className="font-medium text-gray-700 dark:text-gray-300">Key Characteristics:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Simplicity:</strong> Represents time as a single integer, making it easy to store and compute differences.</li>
+              <li><strong>Universality:</strong> Independent of time zones and daylight saving rules, providing a global standard (always UTC).</li>
+              <li><strong>Usage:</strong> Widely used in operating systems, file formats, programming languages, and databases.</li>
+              <li><strong>Millisecond Precision:</strong> While the standard is seconds, some systems use milliseconds since epoch (this tool uses seconds).</li>
+            </ul>
+          </div>
+          <p className="pt-2">
+            This tool helps you convert Unix timestamps to human-readable dates and vice-versa, and also displays the current Unix timestamp.
+          </p>
+        </div>
+      </div>
     </ToolLayout>
   );
 };

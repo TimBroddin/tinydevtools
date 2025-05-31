@@ -110,6 +110,31 @@ const TemperatureConverter = () => {
           />
         </div>
       </div>
+
+      {/* Information Section */}
+      <div className="mt-8 space-y-4">
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+          About Temperature Scales
+        </h3>
+        <div className="text-sm text-muted-foreground space-y-3">
+          <p>
+            Convert between Celsius (°C), Fahrenheit (°F), and Kelvin (K).
+            Each scale has different reference points for measuring temperature.
+          </p>
+          
+          <div className="space-y-1">
+            <p className="font-medium text-gray-700 dark:text-gray-300">Key Facts:</p>
+            <ul className="list-disc list-inside space-y-1 ml-4">
+              <li><strong>Celsius:</strong> Metric scale based on water's freezing (0°C) and boiling (100°C) points.</li>
+              <li><strong>Fahrenheit:</strong> Used primarily in the US. Water freezes at 32°F and boils at 212°F.</li>
+              <li><strong>Kelvin:</strong> Scientific scale where 0 K is absolute zero. No negative values.</li>
+            </ul>
+          </div>
+           <p className="pt-2">
+            This tool helps you quickly switch between these units.
+          </p>
+        </div>
+      </div>
     </ToolLayout>
   );
 };
