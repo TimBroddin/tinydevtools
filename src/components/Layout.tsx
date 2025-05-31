@@ -21,6 +21,7 @@ import {
   Globe,
   ArrowRightLeft,
   Search,
+  Thermometer,
 } from "lucide-react";
 import { cn } from "../utils/cn";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -84,6 +85,12 @@ const toolsData: ToolDefinition[] = [
         path: "/converters/number-base",
         icon: Database,
         keywords: ["binary", "octal", "decimal", "hexadecimal", "radix"],
+      },
+      {
+        name: "Temperature Converter",
+        path: "/converters/temperature",
+        icon: Thermometer,
+        keywords: ["temperature", "converter", "celsius", "fahrenheit", "kelvin"],
       },
     ],
   },

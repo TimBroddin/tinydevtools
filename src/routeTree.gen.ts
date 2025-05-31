@@ -24,6 +24,7 @@ import { Route as DebuggersJwtImport } from './routes/debuggers/jwt'
 import { Route as ConvertersUrlencodeDecodeImport } from './routes/converters/urlencode-decode'
 import { Route as ConvertersUnixTimeImport } from './routes/converters/unix-time'
 import { Route as ConvertersTextcaseImport } from './routes/converters/textcase'
+import { Route as ConvertersTemperatureImport } from './routes/converters/temperature'
 import { Route as ConvertersNumberBaseImport } from './routes/converters/number-base'
 import { Route as ConvertersHashImport } from './routes/converters/hash'
 import { Route as ConvertersBase64Import } from './routes/converters/base64'
@@ -108,6 +109,12 @@ const ConvertersTextcaseRoute = ConvertersTextcaseImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ConvertersTemperatureRoute = ConvertersTemperatureImport.update({
+  id: '/converters/temperature',
+  path: '/converters/temperature',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ConvertersNumberBaseRoute = ConvertersNumberBaseImport.update({
   id: '/converters/number-base',
   path: '/converters/number-base',
@@ -156,6 +163,13 @@ declare module '@tanstack/react-router' {
       path: '/converters/number-base'
       fullPath: '/converters/number-base'
       preLoaderRoute: typeof ConvertersNumberBaseImport
+      parentRoute: typeof rootRoute
+    }
+    '/converters/temperature': {
+      id: '/converters/temperature'
+      path: '/converters/temperature'
+      fullPath: '/converters/temperature'
+      preLoaderRoute: typeof ConvertersTemperatureImport
       parentRoute: typeof rootRoute
     }
     '/converters/textcase': {
@@ -252,6 +266,7 @@ export interface FileRoutesByFullPath {
   '/converters/base64': typeof ConvertersBase64Route
   '/converters/hash': typeof ConvertersHashRoute
   '/converters/number-base': typeof ConvertersNumberBaseRoute
+  '/converters/temperature': typeof ConvertersTemperatureRoute
   '/converters/textcase': typeof ConvertersTextcaseRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
@@ -271,6 +286,7 @@ export interface FileRoutesByTo {
   '/converters/base64': typeof ConvertersBase64Route
   '/converters/hash': typeof ConvertersHashRoute
   '/converters/number-base': typeof ConvertersNumberBaseRoute
+  '/converters/temperature': typeof ConvertersTemperatureRoute
   '/converters/textcase': typeof ConvertersTextcaseRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
@@ -291,6 +307,7 @@ export interface FileRoutesById {
   '/converters/base64': typeof ConvertersBase64Route
   '/converters/hash': typeof ConvertersHashRoute
   '/converters/number-base': typeof ConvertersNumberBaseRoute
+  '/converters/temperature': typeof ConvertersTemperatureRoute
   '/converters/textcase': typeof ConvertersTextcaseRoute
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
@@ -312,6 +329,7 @@ export interface FileRouteTypes {
     | '/converters/base64'
     | '/converters/hash'
     | '/converters/number-base'
+    | '/converters/temperature'
     | '/converters/textcase'
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
@@ -330,6 +348,7 @@ export interface FileRouteTypes {
     | '/converters/base64'
     | '/converters/hash'
     | '/converters/number-base'
+    | '/converters/temperature'
     | '/converters/textcase'
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
@@ -348,6 +367,7 @@ export interface FileRouteTypes {
     | '/converters/base64'
     | '/converters/hash'
     | '/converters/number-base'
+    | '/converters/temperature'
     | '/converters/textcase'
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
@@ -368,6 +388,7 @@ export interface RootRouteChildren {
   ConvertersBase64Route: typeof ConvertersBase64Route
   ConvertersHashRoute: typeof ConvertersHashRoute
   ConvertersNumberBaseRoute: typeof ConvertersNumberBaseRoute
+  ConvertersTemperatureRoute: typeof ConvertersTemperatureRoute
   ConvertersTextcaseRoute: typeof ConvertersTextcaseRoute
   ConvertersUnixTimeRoute: typeof ConvertersUnixTimeRoute
   ConvertersUrlencodeDecodeRoute: typeof ConvertersUrlencodeDecodeRoute
@@ -387,6 +408,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConvertersBase64Route: ConvertersBase64Route,
   ConvertersHashRoute: ConvertersHashRoute,
   ConvertersNumberBaseRoute: ConvertersNumberBaseRoute,
+  ConvertersTemperatureRoute: ConvertersTemperatureRoute,
   ConvertersTextcaseRoute: ConvertersTextcaseRoute,
   ConvertersUnixTimeRoute: ConvertersUnixTimeRoute,
   ConvertersUrlencodeDecodeRoute: ConvertersUrlencodeDecodeRoute,
@@ -415,6 +437,7 @@ export const routeTree = rootRoute
         "/converters/base64",
         "/converters/hash",
         "/converters/number-base",
+        "/converters/temperature",
         "/converters/textcase",
         "/converters/unix-time",
         "/converters/urlencode-decode",
@@ -440,6 +463,9 @@ export const routeTree = rootRoute
     },
     "/converters/number-base": {
       "filePath": "converters/number-base.tsx"
+    },
+    "/converters/temperature": {
+      "filePath": "converters/temperature.tsx"
     },
     "/converters/textcase": {
       "filePath": "converters/textcase.tsx"
