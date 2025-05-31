@@ -26,7 +26,11 @@ export const seo = ({
             { name: 'twitter:card', content: 'summary_large_image' },
             { name: 'og:image', content: image },
           ]
-        : []),
+        : [
+          { name: 'twitter:image', content: 'https://tinydev.tools/icon-512.png' },
+          { name: 'twitter:card', content: 'summary_large_image' },
+          { name: 'og:image', content: 'https://tinydev.tools/icon-512.png' },
+        ]),
     ]
   
     return tags
