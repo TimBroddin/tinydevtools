@@ -16,10 +16,12 @@ import { Route as TailwindColorsImport } from './routes/tailwind/colors'
 import { Route as NetworkWhoisImport } from './routes/network/whois'
 import { Route as NetworkHeadersImport } from './routes/network/headers'
 import { Route as NetworkDnsImport } from './routes/network/dns'
+import { Route as ImageResizeImport } from './routes/image/resize'
 import { Route as GeneratorsUuidImport } from './routes/generators/uuid'
 import { Route as GeneratorsLoremIpsumImport } from './routes/generators/lorem-ipsum'
 import { Route as GeneratorsFakeDataImport } from './routes/generators/fake-data'
 import { Route as FormattersJsonImport } from './routes/formatters/json'
+import { Route as DebuggersTextImport } from './routes/debuggers/text'
 import { Route as DebuggersJwtImport } from './routes/debuggers/jwt'
 import { Route as ConvertersUrlencodeDecodeImport } from './routes/converters/urlencode-decode'
 import { Route as ConvertersUnixTimeImport } from './routes/converters/unix-time'
@@ -61,6 +63,12 @@ const NetworkDnsRoute = NetworkDnsImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ImageResizeRoute = ImageResizeImport.update({
+  id: '/image/resize',
+  path: '/image/resize',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const GeneratorsUuidRoute = GeneratorsUuidImport.update({
   id: '/generators/uuid',
   path: '/generators/uuid',
@@ -82,6 +90,12 @@ const GeneratorsFakeDataRoute = GeneratorsFakeDataImport.update({
 const FormattersJsonRoute = FormattersJsonImport.update({
   id: '/formatters/json',
   path: '/formatters/json',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DebuggersTextRoute = DebuggersTextImport.update({
+  id: '/debuggers/text',
+  path: '/debuggers/text',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -200,6 +214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DebuggersJwtImport
       parentRoute: typeof rootRoute
     }
+    '/debuggers/text': {
+      id: '/debuggers/text'
+      path: '/debuggers/text'
+      fullPath: '/debuggers/text'
+      preLoaderRoute: typeof DebuggersTextImport
+      parentRoute: typeof rootRoute
+    }
     '/formatters/json': {
       id: '/formatters/json'
       path: '/formatters/json'
@@ -226,6 +247,13 @@ declare module '@tanstack/react-router' {
       path: '/generators/uuid'
       fullPath: '/generators/uuid'
       preLoaderRoute: typeof GeneratorsUuidImport
+      parentRoute: typeof rootRoute
+    }
+    '/image/resize': {
+      id: '/image/resize'
+      path: '/image/resize'
+      fullPath: '/image/resize'
+      preLoaderRoute: typeof ImageResizeImport
       parentRoute: typeof rootRoute
     }
     '/network/dns': {
@@ -271,10 +299,12 @@ export interface FileRoutesByFullPath {
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
+  '/debuggers/text': typeof DebuggersTextRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/image/resize': typeof ImageResizeRoute
   '/network/dns': typeof NetworkDnsRoute
   '/network/headers': typeof NetworkHeadersRoute
   '/network/whois': typeof NetworkWhoisRoute
@@ -291,10 +321,12 @@ export interface FileRoutesByTo {
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
+  '/debuggers/text': typeof DebuggersTextRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/image/resize': typeof ImageResizeRoute
   '/network/dns': typeof NetworkDnsRoute
   '/network/headers': typeof NetworkHeadersRoute
   '/network/whois': typeof NetworkWhoisRoute
@@ -312,10 +344,12 @@ export interface FileRoutesById {
   '/converters/unix-time': typeof ConvertersUnixTimeRoute
   '/converters/urlencode-decode': typeof ConvertersUrlencodeDecodeRoute
   '/debuggers/jwt': typeof DebuggersJwtRoute
+  '/debuggers/text': typeof DebuggersTextRoute
   '/formatters/json': typeof FormattersJsonRoute
   '/generators/fake-data': typeof GeneratorsFakeDataRoute
   '/generators/lorem-ipsum': typeof GeneratorsLoremIpsumRoute
   '/generators/uuid': typeof GeneratorsUuidRoute
+  '/image/resize': typeof ImageResizeRoute
   '/network/dns': typeof NetworkDnsRoute
   '/network/headers': typeof NetworkHeadersRoute
   '/network/whois': typeof NetworkWhoisRoute
@@ -334,10 +368,12 @@ export interface FileRouteTypes {
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
+    | '/debuggers/text'
     | '/formatters/json'
     | '/generators/fake-data'
     | '/generators/lorem-ipsum'
     | '/generators/uuid'
+    | '/image/resize'
     | '/network/dns'
     | '/network/headers'
     | '/network/whois'
@@ -353,10 +389,12 @@ export interface FileRouteTypes {
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
+    | '/debuggers/text'
     | '/formatters/json'
     | '/generators/fake-data'
     | '/generators/lorem-ipsum'
     | '/generators/uuid'
+    | '/image/resize'
     | '/network/dns'
     | '/network/headers'
     | '/network/whois'
@@ -372,10 +410,12 @@ export interface FileRouteTypes {
     | '/converters/unix-time'
     | '/converters/urlencode-decode'
     | '/debuggers/jwt'
+    | '/debuggers/text'
     | '/formatters/json'
     | '/generators/fake-data'
     | '/generators/lorem-ipsum'
     | '/generators/uuid'
+    | '/image/resize'
     | '/network/dns'
     | '/network/headers'
     | '/network/whois'
@@ -393,10 +433,12 @@ export interface RootRouteChildren {
   ConvertersUnixTimeRoute: typeof ConvertersUnixTimeRoute
   ConvertersUrlencodeDecodeRoute: typeof ConvertersUrlencodeDecodeRoute
   DebuggersJwtRoute: typeof DebuggersJwtRoute
+  DebuggersTextRoute: typeof DebuggersTextRoute
   FormattersJsonRoute: typeof FormattersJsonRoute
   GeneratorsFakeDataRoute: typeof GeneratorsFakeDataRoute
   GeneratorsLoremIpsumRoute: typeof GeneratorsLoremIpsumRoute
   GeneratorsUuidRoute: typeof GeneratorsUuidRoute
+  ImageResizeRoute: typeof ImageResizeRoute
   NetworkDnsRoute: typeof NetworkDnsRoute
   NetworkHeadersRoute: typeof NetworkHeadersRoute
   NetworkWhoisRoute: typeof NetworkWhoisRoute
@@ -413,10 +455,12 @@ const rootRouteChildren: RootRouteChildren = {
   ConvertersUnixTimeRoute: ConvertersUnixTimeRoute,
   ConvertersUrlencodeDecodeRoute: ConvertersUrlencodeDecodeRoute,
   DebuggersJwtRoute: DebuggersJwtRoute,
+  DebuggersTextRoute: DebuggersTextRoute,
   FormattersJsonRoute: FormattersJsonRoute,
   GeneratorsFakeDataRoute: GeneratorsFakeDataRoute,
   GeneratorsLoremIpsumRoute: GeneratorsLoremIpsumRoute,
   GeneratorsUuidRoute: GeneratorsUuidRoute,
+  ImageResizeRoute: ImageResizeRoute,
   NetworkDnsRoute: NetworkDnsRoute,
   NetworkHeadersRoute: NetworkHeadersRoute,
   NetworkWhoisRoute: NetworkWhoisRoute,
@@ -442,10 +486,12 @@ export const routeTree = rootRoute
         "/converters/unix-time",
         "/converters/urlencode-decode",
         "/debuggers/jwt",
+        "/debuggers/text",
         "/formatters/json",
         "/generators/fake-data",
         "/generators/lorem-ipsum",
         "/generators/uuid",
+        "/image/resize",
         "/network/dns",
         "/network/headers",
         "/network/whois",
@@ -479,6 +525,9 @@ export const routeTree = rootRoute
     "/debuggers/jwt": {
       "filePath": "debuggers/jwt.tsx"
     },
+    "/debuggers/text": {
+      "filePath": "debuggers/text.tsx"
+    },
     "/formatters/json": {
       "filePath": "formatters/json.tsx"
     },
@@ -490,6 +539,9 @@ export const routeTree = rootRoute
     },
     "/generators/uuid": {
       "filePath": "generators/uuid.tsx"
+    },
+    "/image/resize": {
+      "filePath": "image/resize.tsx"
     },
     "/network/dns": {
       "filePath": "network/dns.tsx"

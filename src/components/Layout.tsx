@@ -9,6 +9,7 @@ import {
   Clock,
   CaseSensitive,
   Hash,
+  Image,
   Database,
   Braces,
   Fingerprint,
@@ -18,6 +19,7 @@ import {
   Replace,
   BookCopy,
   Type,
+  Text,
   Globe,
   ArrowRightLeft,
   Search,
@@ -60,8 +62,18 @@ const toolsData: ToolDefinition[] = [
   {
     category: "Converters",
     items: [
-      { name: "Unix Time", path: "/converters/unix-time", icon: Clock, keywords: ["timestamp", "epoch"] },
-      { name: "Base64", path: "/converters/base64", icon: Binary, keywords: ["encode", "decode"] },
+      {
+        name: "Unix Time",
+        path: "/converters/unix-time",
+        icon: Clock,
+        keywords: ["timestamp", "epoch"],
+      },
+      {
+        name: "Base64",
+        path: "/converters/base64",
+        icon: Binary,
+        keywords: ["encode", "decode"],
+      },
       {
         name: "URL Encode/Decode",
         path: "/converters/urlencode-decode",
@@ -78,7 +90,14 @@ const toolsData: ToolDefinition[] = [
         name: "Text Case Converter",
         path: "/converters/textcase",
         icon: CaseSensitive,
-        keywords: ["uppercase", "lowercase", "titlecase", "camelcase", "snakecase", "kebabcase"],
+        keywords: [
+          "uppercase",
+          "lowercase",
+          "titlecase",
+          "camelcase",
+          "snakecase",
+          "kebabcase",
+        ],
       },
       {
         name: "Number Base Converter",
@@ -90,38 +109,127 @@ const toolsData: ToolDefinition[] = [
         name: "Temperature Converter",
         path: "/converters/temperature",
         icon: Thermometer,
-        keywords: ["temperature", "converter", "celsius", "fahrenheit", "kelvin"],
+        keywords: [
+          "temperature",
+          "converter",
+          "celsius",
+          "fahrenheit",
+          "kelvin",
+        ],
       },
     ],
   },
   {
     category: "Generators",
     items: [
-      { name: "Uuid", path: "/generators/uuid", icon: Fingerprint, keywords: ["guid", "unique identifier"] },
-      { name: "Fake Data", path: "/generators/fake-data", icon: BookCopy, keywords: ["dummy", "mock", "placeholder", "address", "name", "email", "phone", "date", "time", "number", "color", "word", "sentence", "paragraph"] },
-      { name: "Lorem Ipsum", path: "/generators/lorem-ipsum", icon: Type, keywords: ["placeholder text", "text generator", "dummy content"] },
+      {
+        name: "Uuid",
+        path: "/generators/uuid",
+        icon: Fingerprint,
+        keywords: ["guid", "unique identifier"],
+      },
+      {
+        name: "Fake Data",
+        path: "/generators/fake-data",
+        icon: BookCopy,
+        keywords: [
+          "dummy",
+          "mock",
+          "placeholder",
+          "address",
+          "name",
+          "email",
+          "phone",
+          "date",
+          "time",
+          "number",
+          "color",
+          "word",
+          "sentence",
+          "paragraph",
+        ],
+      },
+      {
+        name: "Lorem Ipsum",
+        path: "/generators/lorem-ipsum",
+        icon: Type,
+        keywords: ["placeholder text", "text generator", "dummy content"],
+      },
     ],
   },
   {
     category: "Debuggers",
-    items: [{ name: "JWT", path: "/debuggers/jwt", icon: ListChecks, keywords: ["json web token", "bearer", "auth"] }],
+    items: [
+      {
+        name: "JWT",
+        path: "/debuggers/jwt",
+        icon: ListChecks,
+        keywords: ["json web token", "bearer", "auth"],
+      },
+      {
+        name: "Text",
+        path: "/debuggers/text",
+        icon: Text,
+        keywords: ["text", "debugger", "analyze", "statistics", "errors"],
+      },
+    ],
   },
   {
     category: "Formatters",
-    items: [{ name: "JSON", path: "/formatters/json", icon: Braces, keywords: ["beautify", "prettify", "minify", "lint"] }],
+    items: [
+      {
+        name: "JSON",
+        path: "/formatters/json",
+        icon: Braces,
+        keywords: ["beautify", "prettify", "minify", "lint"],
+      },
+    ],
+  },
+  {
+    category: "Image",
+    items: [
+      {
+        name: "Image Resizer",
+        path: "/image/resize",
+        icon: Image,
+        keywords: ["image", "resize", "dimensions"],
+      },
+    ],
   },
   {
     category: "Tailwind",
-    items: [{ name: "Colors", path: "/tailwind/colors", icon: Palette, keywords: ["css", "stylesheet", "design"] }],
+    items: [
+      {
+        name: "Colors",
+        path: "/tailwind/colors",
+        icon: Palette,
+        keywords: ["css", "stylesheet", "design"],
+      },
+    ],
   },
   {
-    "category": "Net",
+    category: "Net",
     items: [
-      { name: "DNS Lookup", path: "/network/dns", icon: Globe, keywords: ["dns", "lookup", "domain", "network"] },
-      { name: "HTTP Headers", path: "/network/headers", icon: ArrowRightLeft, keywords: ["cors", "headers", "network"] },
-      { name: "WHOIS Lookup", path: "/network/whois", icon: Search, keywords: ["whois", "lookup", "domain", "network"] },
-    ]
-  }
+      {
+        name: "DNS Lookup",
+        path: "/network/dns",
+        icon: Globe,
+        keywords: ["dns", "lookup", "domain", "network"],
+      },
+      {
+        name: "HTTP Headers",
+        path: "/network/headers",
+        icon: ArrowRightLeft,
+        keywords: ["cors", "headers", "network"],
+      },
+      {
+        name: "WHOIS Lookup",
+        path: "/network/whois",
+        icon: Search,
+        keywords: ["whois", "lookup", "domain", "network"],
+      },
+    ],
+  },
 ];
 
 const Sidebar = ({ className, setOpenCommand, tools }: SidebarProps) => {
@@ -202,87 +310,87 @@ const Layout = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-    <div className="flex min-h-screen gap-2">
-      {/* Sidebar for desktop */}
-      <aside className="hidden lg:block w-64 border-r border-border/40">
-        <div className="flex h-14 items-center gap-2 px-4 border-b border-border/40">
-          <Link to="/" className="flex items-center gap-2">
-            <Terminal className="w-5 h-5 text-primary" />
-            <span className="font-semibold">tinydev.tools</span>
-          </Link>
+      <div className="flex min-h-screen gap-2">
+        {/* Sidebar for desktop */}
+        <aside className="hidden lg:block w-64 border-r border-border/40">
+          <div className="flex h-14 items-center gap-2 px-4 border-b border-border/40">
+            <Link to="/" className="flex items-center gap-2">
+              <Terminal className="w-5 h-5 text-primary" />
+              <span className="font-semibold">tinydev.tools</span>
+            </Link>
+          </div>
+          <Sidebar setOpenCommand={setOpenCommand} tools={toolsData} />
+        </aside>
+
+        <div className="flex-1 flex flex-col">
+          <header className="sticky top-0 z-40 h-14 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="flex h-14 items-center gap-4 px-4">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <button className="lg:hidden -ml-2 p-2 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">
+                    <Menu className="w-5 h-5" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-64 p-0">
+                  <div className="flex h-14 items-center gap-2 px-4 border-b border-border/40">
+                    <Terminal className="w-5 h-5 text-primary" />
+                    <span className="font-semibold">tinydev.tools</span>
+                  </div>
+                  <Sidebar setOpenCommand={setOpenCommand} tools={toolsData} />
+                </SheetContent>
+              </Sheet>
+
+              <div className="flex-1" />
+
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                aria-label={
+                  theme === "dark"
+                    ? "Switch to light mode"
+                    : "Switch to dark mode"
+                }
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
+              </button>
+            </div>
+          </header>
+
+          <main className="flex-1 overflow-hidden">
+            <div className="container max-w-5xl py-6 md:py-10 animate-fadeIn">
+              <Outlet />
+            </div>
+          </main>
         </div>
-        <Sidebar setOpenCommand={setOpenCommand} tools={toolsData} />
-      </aside>
-
-      <div className="flex-1 flex flex-col">
-        <header className="sticky top-0 z-40 h-14 border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex h-14 items-center gap-4 px-4">
-            <Sheet>
-              <SheetTrigger asChild>
-                <button className="lg:hidden -ml-2 p-2 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">
-                  <Menu className="w-5 h-5" />
-                </button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-64 p-0">
-                <div className="flex h-14 items-center gap-2 px-4 border-b border-border/40">
-                  <Terminal className="w-5 h-5 text-primary" />
-                  <span className="font-semibold">tinydev.tools</span>
-                </div>
-                <Sidebar setOpenCommand={setOpenCommand} tools={toolsData} />
-              </SheetContent>
-            </Sheet>
-
-            <div className="flex-1" />
-
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
-              aria-label={
-                theme === "dark"
-                  ? "Switch to light mode"
-                  : "Switch to dark mode"
-              }
-            >
-              {theme === "dark" ? (
-                <Sun className="w-4 h-4" />
-              ) : (
-                <Moon className="w-4 h-4" />
-              )}
-            </button>
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-hidden">
-          <div className="container max-w-5xl py-6 md:py-10 animate-fadeIn">
-            <Outlet />
-          </div>
-        </main>
+        <TanStackRouterDevtools />
+        <CommandDialog open={openCommand} onOpenChange={setOpenCommand}>
+          <CommandInput placeholder="Type a command or search..." />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            {toolsData.map((group) => (
+              <CommandGroup key={group.category} heading={group.category}>
+                {group.items.map((item) => (
+                  <CommandItem
+                    key={item.path}
+                    value={`${item.name} ${item.keywords?.join(" ") || ""}`}
+                    onSelect={() => {
+                      runCommand(() => navigate({ to: item.path }));
+                    }}
+                    className="flex items-center gap-2"
+                  >
+                    <item.icon className="w-4 h-4 opacity-50" />
+                    {item.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            ))}
+          </CommandList>
+        </CommandDialog>
       </div>
-      <TanStackRouterDevtools />
-      <CommandDialog open={openCommand} onOpenChange={setOpenCommand}>
-        <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          {toolsData.map((group) => (
-            <CommandGroup key={group.category} heading={group.category}>
-              {group.items.map((item) => (
-                <CommandItem
-                  key={item.path}
-                  value={`${item.name} ${item.keywords?.join(" ") || ""}`}
-                  onSelect={() => {
-                    runCommand(() => navigate({ to: item.path }));
-                  }}
-                  className="flex items-center gap-2"
-                >
-                  <item.icon className="w-4 h-4 opacity-50" />
-                  {item.name}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          ))}
-        </CommandList>
-      </CommandDialog>
-    </div>
     </QueryClientProvider>
   );
 };
